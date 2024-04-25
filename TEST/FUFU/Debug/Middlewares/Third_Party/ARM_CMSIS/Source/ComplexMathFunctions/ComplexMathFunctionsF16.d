@@ -1,6 +1,6 @@
 Middlewares/Third_Party/ARM_CMSIS/Source/ComplexMathFunctions/ComplexMathFunctionsF16.o: \
  ../Middlewares/Third_Party/ARM_CMSIS/Source/ComplexMathFunctions/ComplexMathFunctionsF16.c \
- C:/Users/napat/Documents/GitHub/FRA222-233_Group5/FRA222_LAB2_6520/FUFU/Source/ComplexMathFunctions/arm_cmplx_conj_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ComplexMathFunctions/arm_cmplx_conj_f16.c \
  ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/complex_math_functions_f16.h \
  ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_types_f16.h \
  ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_types.h \
@@ -13,12 +13,12 @@ Middlewares/Third_Party/ARM_CMSIS/Source/ComplexMathFunctions/ComplexMathFunctio
  ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions_f16.h \
  ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions.h \
  ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/basic_math_functions.h \
- C:/Users/napat/Documents/GitHub/FRA222-233_Group5/FRA222_LAB2_6520/FUFU/Source/ComplexMathFunctions/arm_cmplx_dot_prod_f16.c \
- C:/Users/napat/Documents/GitHub/FRA222-233_Group5/FRA222_LAB2_6520/FUFU/Source/ComplexMathFunctions/arm_cmplx_mag_f16.c \
- C:/Users/napat/Documents/GitHub/FRA222-233_Group5/FRA222_LAB2_6520/FUFU/Source/ComplexMathFunctions/arm_cmplx_mag_squared_f16.c \
- C:/Users/napat/Documents/GitHub/FRA222-233_Group5/FRA222_LAB2_6520/FUFU/Source/ComplexMathFunctions/arm_cmplx_mult_cmplx_f16.c \
- C:/Users/napat/Documents/GitHub/FRA222-233_Group5/FRA222_LAB2_6520/FUFU/Source/ComplexMathFunctions/arm_cmplx_mult_real_f16.c
-C:/Users/napat/Documents/GitHub/FRA222-233_Group5/FRA222_LAB2_6520/FUFU/Source/ComplexMathFunctions/arm_cmplx_conj_f16.c:
+ C:/Users/porpo/OneDrive/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ComplexMathFunctions/arm_cmplx_dot_prod_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ComplexMathFunctions/arm_cmplx_mag_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ComplexMathFunctions/arm_cmplx_mag_squared_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ComplexMathFunctions/arm_cmplx_mult_cmplx_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ComplexMathFunctions/arm_cmplx_mult_real_f16.c
+C:/Users/porpo/OneDrive/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ComplexMathFunctions/arm_cmplx_conj_f16.c:
 ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/complex_math_functions_f16.h:
 ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_types_f16.h:
 ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_types.h:
@@ -31,8 +31,8 @@ C:/Users/napat/Documents/GitHub/FRA222-233_Group5/FRA222_LAB2_6520/FUFU/Source/C
 ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions_f16.h:
 ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions.h:
 ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/basic_math_functions.h:
-C:/Users/napat/Documents/GitHub/FRA222-233_Group5/FRA222_LAB2_6520/FUFU/Source/ComplexMathFunctions/arm_cmplx_dot_prod_f16.c:
-C:/Users/napat/Documents/GitHub/FRA222-233_Group5/FRA222_LAB2_6520/FUFU/Source/ComplexMathFunctions/arm_cmplx_mag_f16.c:
-C:/Users/napat/Documents/GitHub/FRA222-233_Group5/FRA222_LAB2_6520/FUFU/Source/ComplexMathFunctions/arm_cmplx_mag_squared_f16.c:
-C:/Users/napat/Documents/GitHub/FRA222-233_Group5/FRA222_LAB2_6520/FUFU/Source/ComplexMathFunctions/arm_cmplx_mult_cmplx_f16.c:
-C:/Users/napat/Documents/GitHub/FRA222-233_Group5/FRA222_LAB2_6520/FUFU/Source/ComplexMathFunctions/arm_cmplx_mult_real_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ComplexMathFunctions/arm_cmplx_dot_prod_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ComplexMathFunctions/arm_cmplx_mag_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ComplexMathFunctions/arm_cmplx_mag_squared_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ComplexMathFunctions/arm_cmplx_mult_cmplx_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ComplexMathFunctions/arm_cmplx_mult_real_f16.c:

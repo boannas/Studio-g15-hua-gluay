@@ -26,7 +26,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-float PlantSimulation(float VIn) ;
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -71,20 +71,21 @@ int r[] = {0,0,0,0,0,0};
 int l[] = {0,0,0,0,0,0};
 uint8_t data_packet[4] = {0x45, 0,0, 0x0A};
 uint16_t velo[34000];
-uint16_t ADC_RawRead[200]={0};
-uint32_t QEIReadRaw;
-uint16_t wrap_cnt = 0;
-int32_t diff;
+//uint16_t ADC_RawRead[200]={0};
+
 int start;
 int i = 0;
 int j = 1;
 float pwm = 41.67;
 // ---------- //
+//~~QEI Read From AMT103V & PID~~//
+uint32_t QEIReadRaw;
+int32_t diff;
 arm_pid_instance_f32 PID = {0};
-float position =0;
+//float position =0;
 volatile uint16_t setposition = 0;
 float Vfeedback = 0;
-long last_count = 0; // This should be stored persistently if needed across power cycles
+//long last_count = 0; // This should be stored persistently if needed across power cycles
 
 typedef struct
 	{
@@ -115,6 +116,8 @@ static void MX_UART4_Init(void);
 /* USER CODE BEGIN PFP */
 uint64_t micros();
 void QEIEncoderPosVel_Update();
+void PS2X_Reader();
+void Automatic_Control();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -158,11 +161,10 @@ int main(void)
   MX_TIM5_Init();
   MX_UART4_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_Encoder_Start(&htim2,TIM_CHANNEL_ALL);
-
   PID.Kp =0.1;
   PID.Ki =0;
   PID.Kd = 0;
+  HAL_TIM_Encoder_Start(&htim2,TIM_CHANNEL_ALL);
   arm_pid_init_f32(&PID, 0);
   HAL_TIM_Base_Start(&htim3);
   HAL_TIM_Encoder_Start(&htim3,TIM_CHANNEL_ALL);
@@ -176,9 +178,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-//	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, Limito);
-//	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, Limito2);
-
 //	  if (start == 1){
 //		static uint32_t timestamp =0;
 //		if(timestamp < HAL_GetTick())
@@ -218,246 +217,19 @@ int main(void)
 //		}
 //
 //	  }
-//	  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1000);
-//	  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
-//	  QEIReadRaw = __HAL_TIM_GET_COUNTER(&htim2); // Encoder QEI
-//	  static uint32_t timestamp =0;
-// 	  diff = setposition - QEIReadRaw;
-//	  if(timestamp < HAL_GetTick())
-//		  {
-//		  timestamp = HAL_GetTick()+1;
-//		  Vfeedback = arm_pid_f32(&PID, setposition - QEIReadRaw);
-//		  }
-//	  if(diff > 0)
-//		  {
-//			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, Vfeedback);
-//			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
-//		  }
-//	  else if(diff < 0)
-//		  {
-//			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
-//			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, Vfeedback);
-//		  }
-//	  else
-//		  {
-//			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
-//			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
-//		  }
-//		  static uint64_t timestamps =0;
-//		  int64_t currentTime = micros();
-//		  if(currentTime > timestamps)
-//		  {
-//		  timestamps =currentTime + 100000;//us
-//		  QEIEncoderPosVel_Update();
-//		  }
-//	  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
-//	  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, Vfeedback);
 
-//-------------porpor-------------//
-		  HAL_UART_Receive(&huart4,ps2rx, 10 ,10);
-		  ps2v = 0;
-		  ps2v = 0;
-		  on = 0;
-		  if (ps2rx[0] == 72)
-		  {
-			  mode = 1;
-			  ps2v = 0;
-			  ps2v = 0;
-			  on = 0;
-		  }
-		  else if (ps2rx[0] == 71)
-		  {
-			  mode = 0;
-		  }
-		  //--- Mode Analog---//
-		  if (mode == 1)
-		  {
-//			  //Read Ps2 analog in HORIZON
-//			  if (ps2rx[0] == 80 && ps2rx[2] == 13)
-//			  {
-//				  for (int i = 0; i < 10 ; i++)
-//				  {
-//					  if (ps2rx[1]==num[i])
-//					  {
-//						  h[0] = i;
-//					  }
-//				  }
-//				  ps2hpos = h[0];
-//			  }
-//			  else if (ps2rx[0] == 80 && ps2rx[3] == 13)
-//			  {
-//				  for (int i = 0; i < 10 ; i++)
-//				  {
-//					  if (ps2rx[1]==num[i])
-//					  {
-//						  h[0] = i;
-//					  }
-//					  if (ps2rx[2]==num[i])
-//					  {
-//						  h[1] = i;
-//					  }
-//				  }
-//				  ps2hpos = (h[0]*10)+h[1];
-//			  }
-//			  else if (ps2rx[0] == 80 && ps2rx[4] == 13)
-//			  {
-//				  for (int i = 0; i < 10 ; i++)
-//				  {
-//					  if (ps2rx[1]==num[i])
-//					  {
-//						  h[0] = i;
-//					  }
-//					  if (ps2rx[2]==num[i])
-//					  {
-//						  h[1] = i;
-//					  }
-//					  if (ps2rx[3]==num[i])
-//					  {
-//						  h[2] = i;
-//					  }
-//				  }
-//				  ps2hpos = (h[0]*100)+(h[1]*10)+h[2];
-//			  }
-
-			  //Read Ps2 analog in VERTICAL
-			  if(ps2rx[0] == 87){
-				  if (ps2rx[2] == 80){
-					  y = 1;
-				  }
-				  else if (ps2rx[3] == 80){
-					  y = 2;
-				  }
-				  else if (ps2rx[4] == 80){
-					  y = 3;
-				  }
-				  for(int k=1 ; k<5 ; k++){
-					  for (int l=0; l<10 ; l++){
-						  if (ps2rx[k] == num[l]){
-							  v[k-1] = l;
-						  }
-					  }
-				  }
-				  if (y == 1){
-					  ps2vpos = v[0];
-				  }
-				  else if (y == 2){
-					  ps2vpos = (v[0]*10)+v[1];
-				  }
-				  else if (y == 3){
-					  ps2vpos = (v[0]*100)+(v[1]*10)+v[2];
-				  }
-			  }
-
-		  //Convert from 0 - 255 to -128 - 128
-		  ps2v = ((ps2vpos - 123)*128)/127.0;
-		  ps2h = ((ps2hpos - 123)*128)/127.0;
-
-		  //Generate PWM
-		  pwm1 = (ps2v / 128.0)*200;
-		  if (pwm1 > 300){
-			  pwm1 = 0;
-		  }
-		  if (pwm1 < -300){
-			  pwm1 = 0;
-		  }
-		  if (pwm1 < 0)
-		  {
-			  on = -1;
-			  pwm1 = pwm1 * -1;
-			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
-		  }
-		  else if (pwm1 > 0)
-		  {
-			  on = 1;
-			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1000);		//PWM out forward
-
-		  }
-		  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, pwm1);
-		  }
-
-		  //--- Mode Button ---//
-		  else if (mode == 0)
-		  {
-			  ps2v = 0;
-			  ps2h = 0;
-			  //Keys Map
-
-			  static uint32_t timestamp =0;
-			  if(timestamp < HAL_GetTick())
-			  {
-				  timestamp = HAL_GetTick()+50;
-				  ps2rx[0] = 0;
-			  }
-
-			  for (int i =0;i<6;i++)
-			  {
-
-				  if (ps2rx[0] == 0)
-				  {
-					  //Left
-					  l[0] = 0; //w
-					  l[1] = 0;	//a
-					  l[2] = 0;	//s
-					  l[3] = 0;	//d
-					  l[4] = 0;	//l1
-					  l[5] = 0;	//l2
-					  //Right
-					  r[0] = 0;	//w
-					  r[1] = 0;	//a
-					  r[2] = 0;	//s
-					  r[3] = 0;	//d
-					  r[4] = 0;	//r1
-					  r[5] = 0;	//r2
-
-					  on = 0;
-
-				  }
-
-				  if (ps2rx[0] - 65 == i)
-				  {
-					  l[i] = 1;
-				  }
-
-				  else if (ps2rx[0] - 73 == i)
-				  {
-					  r[i] = 1;
-				  }
+//
+	  	  QEIReadRaw = __HAL_TIM_GET_COUNTER(&htim2); // Encoder QEI
+	  	  if(mode == 1)
+	  	  {
+	  		PS2X_Reader();
+	  	  }
+	  	  else if(mode == 2)
+	  	  {
+	  		Automatic_Control();
+	  	  }
 
 
-			  }
-
-			  //Generate PWM
-			  if (l[2] == 1)
-			  {
-				  pwm1 = pwm1 - x;	// + PWM with x
-			  }
-			  else if (l[3] == 1)
-			  {
-				  pwm1 = pwm1 + x;	// - PWM with x
-			  }
-			  else if (r[3] == 1)
-			  {
-				  if (pwm1 < 0)
-				  {
-					  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, -pwm1);	//PWM out forward
-					  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1000);
-				  }
-				  else if (pwm > 0)
-				  {
-					  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, pwm1);	//PWM out forward
-					  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
-				  }
-				  on = 1;
-			  }
-			  else if (r[1] == 1)
-			  {
-				  on = -1;
-				  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
-				  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);	//PWM out backward
-			  }
-		  }
-
-//--------------------------------//
 	  }
 
 
@@ -807,7 +579,7 @@ static void MX_TIM5_Init(void)
   htim5.Instance = TIM5;
   htim5.Init.Prescaler = 0;
   htim5.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim5.Init.Period = 4.294967295E9;
+  htim5.Init.Period = 4294967295;
   htim5.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim5.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim5) != HAL_OK)
@@ -937,16 +709,245 @@ void QEIEncoderPosVel_Update()
 		QEIdata.Position[OLD] = QEIdata.Position[NEW];
 		QEIdata.TimeStamp[OLD]=QEIdata.TimeStamp[NEW];
 }
-//void EXTI4_IRQHandler(void)
-//{
-//    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_4);
-//}
-//
-//void EXTI9_5_IRQHandler(void)
-//{
-//    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_6);
-//}
 
+void PS2X_Reader()
+{
+	//-------------porpor-------------//
+			  HAL_UART_Receive(&huart4,ps2rx, 10 ,10);
+			  ps2v = 0;
+			  ps2v = 0;
+			  on = 0;
+			  if (ps2rx[0] == 72)
+			  {
+				  mode = 1;
+				  ps2v = 0;
+				  ps2v = 0;
+				  on = 0;
+			  }
+			  else if (ps2rx[0] == 71)
+			  {
+				  mode = 0;
+			  }
+			  //--- Mode Analog---//
+			  if (mode == 1)
+			  {
+	//			  //Read Ps2 analog in HORIZON
+	//			  if (ps2rx[0] == 80 && ps2rx[2] == 13)
+	//			  {
+	//				  for (int i = 0; i < 10 ; i++)
+	//				  {
+	//					  if (ps2rx[1]==num[i])
+	//					  {
+	//						  h[0] = i;
+	//					  }
+	//				  }
+	//				  ps2hpos = h[0];
+	//			  }
+	//			  else if (ps2rx[0] == 80 && ps2rx[3] == 13)
+	//			  {
+	//				  for (int i = 0; i < 10 ; i++)
+	//				  {
+	//					  if (ps2rx[1]==num[i])
+	//					  {
+	//						  h[0] = i;
+	//					  }
+	//					  if (ps2rx[2]==num[i])
+	//					  {
+	//						  h[1] = i;
+	//					  }
+	//				  }
+	//				  ps2hpos = (h[0]*10)+h[1];
+	//			  }
+	//			  else if (ps2rx[0] == 80 && ps2rx[4] == 13)
+	//			  {
+	//				  for (int i = 0; i < 10 ; i++)
+	//				  {
+	//					  if (ps2rx[1]==num[i])
+	//					  {
+	//						  h[0] = i;
+	//					  }
+	//					  if (ps2rx[2]==num[i])
+	//					  {
+	//						  h[1] = i;
+	//					  }
+	//					  if (ps2rx[3]==num[i])
+	//					  {
+	//						  h[2] = i;
+	//					  }
+	//				  }
+	//				  ps2hpos = (h[0]*100)+(h[1]*10)+h[2];
+	//			  }
+
+				  //Read Ps2 analog in VERTICAL
+				  if(ps2rx[0] == 87){
+					  if (ps2rx[2] == 80){
+						  y = 1;
+					  }
+					  else if (ps2rx[3] == 80){
+						  y = 2;
+					  }
+					  else if (ps2rx[4] == 80){
+						  y = 3;
+					  }
+					  for(int k=1 ; k<5 ; k++){
+						  for (int l=0; l<10 ; l++){
+							  if (ps2rx[k] == num[l]){
+								  v[k-1] = l;
+							  }
+						  }
+					  }
+					  if (y == 1){
+						  ps2vpos = v[0];
+					  }
+					  else if (y == 2){
+						  ps2vpos = (v[0]*10)+v[1];
+					  }
+					  else if (y == 3){
+						  ps2vpos = (v[0]*100)+(v[1]*10)+v[2];
+					  }
+				  }
+
+			  //Convert from 0 - 255 to -128 - 128
+			  ps2v = ((ps2vpos - 123)*128)/127.0;
+			  ps2h = ((ps2hpos - 123)*128)/127.0;
+
+			  //Generate PWM
+			  pwm1 = (ps2v / 128.0)*300;
+			  if (pwm1 > 300){
+				  pwm1 = 0;
+			  }
+			  if (pwm1 < -300){
+				  pwm1 = 0;
+			  }
+			  if (pwm1 < 0)
+			  {
+				  on = -1;
+				  pwm1 = pwm1 * -1;
+				  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
+			  }
+			  else if (pwm1 > 0)
+			  {
+				  on = 1;
+				  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1000);		//PWM out forward
+
+			  }
+			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, pwm1);
+			  }
+
+			  //--- Mode Button ---//
+			  else if (mode == 0)
+			  {
+				  ps2v = 0;
+				  ps2h = 0;
+				  //Keys Map
+				  static uint32_t timestamp =0;
+				  if(timestamp < HAL_GetTick())
+				  {
+					  timestamp = HAL_GetTick()+50;
+					  ps2rx[0] = 0;
+				  }
+				  for (int i =0;i<6;i++)
+				  {
+					  if (ps2rx[0] == 0)
+					  {
+						  //Left
+						  l[0] = 0; //w
+						  l[1] = 0;	//a
+						  l[2] = 0;	//s
+						  l[3] = 0;	//d
+						  l[4] = 0;	//l1
+						  l[5] = 0;	//l2
+						  //Right
+						  r[0] = 0;	//w
+						  r[1] = 0;	//a
+						  r[2] = 0;	//s
+						  r[3] = 0;	//d
+						  r[4] = 0;	//r1
+						  r[5] = 0;	//r2
+
+						  on = 0;
+					  }
+
+					  if (ps2rx[0] - 65 == i)
+					  {
+						  l[i] = 1;
+					  }
+
+					  else if (ps2rx[0] - 73 == i)
+					  {
+						  r[i] = 1;
+					  }
+				  }
+
+				  //Generate PWM
+				  if (l[2] == 1)
+				  {
+					  pwm1 = pwm1 - x;	// + PWM with x
+				  }
+				  else if (l[3] == 1)
+				  {
+					  pwm1 = pwm1 + x;	// - PWM with x
+				  }
+				  else if (r[3] == 1)
+				  {
+					  if (pwm1 < 0)
+					  {
+						  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, -pwm1);	//PWM out forward
+						  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1000);
+					  }
+					  else if (pwm > 0)
+					  {
+						  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, pwm1);	//PWM out forward
+						  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
+					  }
+					  on = 1;
+					  if (pwm == 0)
+					  {
+						  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);	//PWM out forward
+						  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
+					  }
+				  }
+				  else if (r[1] == 1)
+				  {
+					  on = -1;
+					  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
+					  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);	//PWM out backward
+				  }
+			  }
+
+	//--------------------------------//
+}
+
+
+void Automatic_Control()
+{
+
+		  static uint32_t timestamp =0;
+	 	  diff = setposition - QEIReadRaw;
+		  if(timestamp < HAL_GetTick())
+			  {
+			  timestamp = HAL_GetTick()+1;
+			  Vfeedback = arm_pid_f32(&PID, setposition - QEIReadRaw);
+			  }
+		  if(diff > 0)
+			  {
+				  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, Vfeedback);
+				  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
+			  }
+		  else if(diff < 0)
+			  {
+				  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, Vfeedback);
+				  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1000);
+			  }
+			  static uint64_t timestamps =0;
+			  int64_t currentTime = micros();
+			  if(currentTime > timestamps)
+			  {
+			  timestamps =currentTime + 100000;//us
+			  QEIEncoderPosVel_Update();
+			  }
+}
+// Photo electric Limit Switch Condition
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
     if (GPIO_Pin == GPIO_PIN_4)
@@ -954,12 +955,17 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         // Handle the interrupt for PA4
         // Example: Toggle an LED, send a message, etc.
     	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, RESET);
+    	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
+		  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);	//PWM out backward
     }
     else if (GPIO_Pin == GPIO_PIN_6)
     {
         // Handle the interrupt for PA6
         // Example: Toggle a different LED, trigger another event, etc.
     	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
+    	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
+		__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);	//PWM out backward
+		mode = 0;
     }
 }
 

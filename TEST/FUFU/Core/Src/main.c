@@ -178,56 +178,66 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-//	  if (start == 1){
-//		static uint32_t timestamp =0;
-//		if(timestamp < HAL_GetTick())
-//		{
-//		  timestamp = HAL_GetTick()+0.5;
-//
-//		  velo[i] = QEIdata.QEIAngularVelocity;
-//
-//		  data_packet[1] = (uint8_t)(QEIdata.QEIAngularVelocity & 0x00FF); // Mask with 0x00FF to get LSB
-//		  data_packet[2]  = (uint8_t)(QEIdata.QEIAngularVelocity >> 8)& 0x00FF; // Shift right 8 bits to get MSB
-//
-//		  // Transmit data over UART
-//		  for (int i = 0; i < sizeof(data_packet); i++)
-//		  {
-//			HAL_UART_Transmit(&hlpuart1, &data_packet[i], 1, 5);
-//		  }
-//
-//		  /// j = 1
-//		  if (i == (j*2000)){
-//			  j++;
-//		  }
-//
-//		  if ((j%2) == 0){
-//			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, (j/2)*3*pwm);
-////			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1000);
-//			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
-//		  }
-//
-//		  if ((j%2) == 1){
-//			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
-//		  }
-//		  if (j == 18){
-//			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
-//		  }
-//		  i++;
-//
-//		}
-//
-//	  }
 
-//
-	  	  QEIReadRaw = __HAL_TIM_GET_COUNTER(&htim2); // Encoder QEI
-	  	  if(mode == 1)
-	  	  {
-	  		PS2X_Reader();
-	  	  }
-	  	  else if(mode == 2)
-	  	  {
-	  		Automatic_Control();
-	  	  }
+  	  QEIReadRaw = __HAL_TIM_GET_COUNTER(&htim2); // Encoder QEI
+  	  static uint64_t timestamps =0;
+  	  int64_t currentTime = micros();
+
+  	  if(currentTime > timestamps)
+  	  {
+  		  timestamps = currentTime + 100000;//us
+  		  QEIEncoderPosVel_Update();
+  	  }
+
+
+	  if (start == 1){
+		static uint32_t timestamp =0;
+		if(timestamp < HAL_GetTick())
+		{
+		  timestamp = HAL_GetTick()+0.5;
+
+		  velo[i] = QEIdata.QEIAngularVelocity;
+
+		  data_packet[1] = (uint8_t)(QEIdata.QEIAngularVelocity & 0x00FF); // Mask with 0x00FF to get LSB
+		  data_packet[2]  = (uint8_t)(QEIdata.QEIAngularVelocity >> 8)& 0x00FF; // Shift right 8 bits to get MSB
+
+		  // Transmit data over UART
+		  for (int i = 0; i < sizeof(data_packet); i++)
+		  {
+			HAL_UART_Transmit(&hlpuart1, &data_packet[i], 1, 5);
+		  }
+
+		  /// j = 1
+		  if (i == (j*2000)){
+			  j++;
+		  }
+
+		  if ((j%2) == 0){
+			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, (j/2)*3*pwm);
+//			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1000);
+			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
+		  }
+
+		  if ((j%2) == 1){
+			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
+		  }
+		  if (j == 18){
+			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
+		  }
+		  i++;
+
+		}
+
+	  }
+
+//	  	  if(mode == 1)
+//	  	  {
+//	  		PS2X_Reader();
+//	  	  }
+//	  	  else if(mode == 2)
+//	  	  {
+//	  		Automatic_Control();
+//	  	  }
 
 
 	  }
@@ -577,7 +587,7 @@ static void MX_TIM5_Init(void)
 
   /* USER CODE END TIM5_Init 1 */
   htim5.Instance = TIM5;
-  htim5.Init.Prescaler = 0;
+  htim5.Init.Prescaler = 169;
   htim5.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim5.Init.Period = 4294967295;
   htim5.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;

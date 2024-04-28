@@ -71,21 +71,17 @@ int r[] = {0,0,0,0,0,0};
 int l[] = {0,0,0,0,0,0};
 uint8_t data_packet[4] = {0x45, 0,0, 0x0A};
 uint16_t velo[34000];
-//uint16_t ADC_RawRead[200]={0};
-
 int start;
 int i = 0;
 int j = 1;
 float pwm = 41.67;
-// ---------- //
+
 //~~QEI Read From AMT103V & PID~~//
 uint32_t QEIReadRaw;
 int32_t diff;
 arm_pid_instance_f32 PID = {0};
-//float position =0;
 volatile uint16_t setposition = 0;
 float Vfeedback = 0;
-//long last_count = 0; // This should be stored persistently if needed across power cycles
 
 typedef struct
 	{
@@ -206,6 +202,7 @@ int main(void)
 		  {
 			HAL_UART_Transmit(&hlpuart1, &data_packet[i], 1, 5);
 		  }
+
 
 		  /// j = 1
 		  if (i == (j*2000)){
@@ -692,6 +689,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			_micros += UINT32_MAX;
 			}
 	}
+
 uint64_t micros()
 	{
 		return __HAL_TIM_GET_COUNTER(&htim5)+_micros;
@@ -928,7 +926,6 @@ void PS2X_Reader()
 	//--------------------------------//
 }
 
-
 void Automatic_Control()
 {
 
@@ -957,7 +954,8 @@ void Automatic_Control()
 			  QEIEncoderPosVel_Update();
 			  }
 }
-// Photo electric Limit Switch Condition
+
+// Photo Limit Condition
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
     if (GPIO_Pin == GPIO_PIN_4)

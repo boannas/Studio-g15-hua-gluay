@@ -179,7 +179,6 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-<<<<<<< HEAD
   	  QEIReadRaw = __HAL_TIM_GET_COUNTER(&htim2); // Encoder QEI
   	  static uint64_t timestamps =0;
   	  int64_t currentTime = micros();
@@ -231,7 +230,6 @@ int main(void)
 		}
 
 	  }
-=======
 //  	  QEIReadRaw = __HAL_TIM_GET_COUNTER(&htim2); // Encoder QEI
 //  	  static uint64_t timestamps =0;
 //  	  int64_t currentTime = micros();
@@ -282,7 +280,6 @@ int main(void)
 //		}
 //
 //	  }
->>>>>>> a661b0f9c5aa1ba70d68584add76c2f4b3976fa0
 
 //	  	  if(mode == 1)
 //	  	  {
@@ -292,7 +289,22 @@ int main(void)
 //	  	  {
 //	  		Automatic_Control();
 //	  	  }
-	  PS2X_Reader();
+	  HAL_UART_Receive(&huart4,ps2rx, 10 ,10);
+
+	  if(ps2rx[0] == 74){
+		  stop = 1;
+	  }
+
+	  if (stop == 1 && ps2rx[0] == 75){
+		  stop = 0;
+		  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);		//Stop
+		  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
+		  pwm1 = 0;
+	  }
+
+	  else if(stop == 0){
+		  PS2X_Reader();
+	  }
 
 
   }
@@ -644,7 +656,7 @@ static void MX_TIM5_Init(void)
   htim5.Instance = TIM5;
   htim5.Init.Prescaler = 169;
   htim5.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim5.Init.Period = 4294967295;
+  htim5.Init.Period = 4.294967295E9;
   htim5.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim5.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim5) != HAL_OK)
@@ -779,14 +791,13 @@ void QEIEncoderPosVel_Update()
 void PS2X_Reader()
 {
 	///----- Stage 1: Jogging and Floor selection -----///
-	HAL_UART_Receive(&huart4,ps2rx, 10 ,10);
 	ps2v = 0;
 	ps2h = 0;
 	on = 0;
 	if (ps2rx[0] == 69) 		//Press L4 to switch to use Joy stick
 	{
 		mode = 1;
-		ps2vpos = 123;
+		ps2vpos = 132;
 	}
 	if (ps2rx[0] == 70)		//Press L5 to switch to use Button
 	{
@@ -796,14 +807,14 @@ void PS2X_Reader()
 	if (mode == 1)
 	{
 		//Read Ps2 Joy stick in VERTICAL
-		if(ps2rx[0] == 87){
-			if (ps2rx[2] == 80){
+		if(ps2rx[0] == 81){
+			if (ps2rx[2] == 83){
 				y = 1;
 			}
-			else if (ps2rx[3] == 80){
+			else if (ps2rx[3] == 83){
 				y = 2;
 			}
-			else if (ps2rx[4] == 80){
+			else if (ps2rx[4] == 83){
 				y = 3;
 			}
 			for(int k=1 ; k<5 ; k++){
@@ -824,7 +835,7 @@ void PS2X_Reader()
 			}
 
 //			  //Read Ps2 Joy stick in HORIZON
-//			  if (ps2rx[0] == 80 && ps2rx[2] == 13)
+//			  if (ps2rx[0] == 83 && ps2rx[2] == 13)
 //			  {
 //				  for (int i = 0; i < 10 ; i++)
 //				  {
@@ -835,7 +846,7 @@ void PS2X_Reader()
 //				  }
 //				  ps2hpos = h[0];
 //			  }
-//			  else if (ps2rx[0] == 80 && ps2rx[3] == 13)
+//			  else if (ps2rx[0] == 83 && ps2rx[3] == 13)
 //			  {
 //				  for (int i = 0; i < 10 ; i++)
 //				  {
@@ -850,7 +861,7 @@ void PS2X_Reader()
 //				  }
 //				  ps2hpos = (h[0]*10)+h[1];
 //			  }
-//			  else if (ps2rx[0] == 80 && ps2rx[4] == 13)
+//			  else if (ps2rx[0] == 83 && ps2rx[4] == 13)
 //			  {
 //				  for (int i = 0; i < 10 ; i++)
 //				  {
@@ -872,8 +883,8 @@ void PS2X_Reader()
 		}
 
 		//Convert from 0 - 255 to -128 - 128
-		ps2v = ((ps2vpos - 123)*128)/127.0;
-		ps2h = ((ps2hpos - 123)*128)/127.0;
+		ps2v = ps2vpos - 132;
+		ps2h = ps2hpos - 132;
 
 		//Generate PWM
 		pwm1 = (ps2v / 128.0)*300;
@@ -901,16 +912,16 @@ void PS2X_Reader()
 	else if (mode == 2)
 	{
 		//////////////////////BUG BUG BUG BUG BUG BUG BUG BUG//////////////////////////////
-		if (l[6] == 1 && mode == 2){
-			f[fuck] = 1+fuck;
-			fuck++;
-		}
-		/// this upper code for checking in Live Expression about Floor Seclection
-		//---- Reset Floor in Array f[] ----//
-		if (r[0] == 1 && mode == 2){
-			f[fuck-1] = 0;
-			fuck--;
-		}
+//		if (l[6] == 1 && mode == 2){
+//			f[fuck] = 1+fuck;
+//			fuck++;
+//		}
+//		/// this upper code for checking in Live Expression about Floor Seclection
+//		//---- Reset Floor in Array f[] ----//
+//		if (r[0] == 1 && mode == 2){
+//			f[fuck-1] = 0;
+//			fuck--;
+//		}
 		//////////////////////BUG BUG BUG BUG BUG BUG BUG BUG//////////////////////////////
 		ps2v = 0;
 		ps2h = 0;
@@ -991,16 +1002,16 @@ void PS2X_Reader()
 	}
 
 	//---- Floor Seclection ----//
-//	if (ps2rx[0] == 71){
-//		f[countfloor] = 1+countfloor;
-//		countfloor++;
-//	}
-//		/// this upper code for checking in Live Expression about Floor Seclection
-//	//---- Reset Floor in Array f[] ----//
-//	if (ps2rx[0] == 73){
-//		f[countfloor-1] = 0;
-//		countfloor--;
-//	}
+	if (ps2rx[0] == 71){
+		f[fuck] = 1+fuck;
+		fuck= fuck +1;
+	}
+		/// this upper code for checking in Live Expression about Floor Seclection
+	//---- Reset Floor in Array f[] ----//
+	else if (ps2rx[0] == 73){
+		f[fuck-1] = 0;
+		fuck = fuck -1;
+	}
 
 	if (ps2rx[0] == 74){
 		stop = 1;

@@ -67,7 +67,7 @@ int ps2vpos;
 int ps2v;
 int ps2hpos;
 int ps2h;
-uint8_t x = 1;
+uint8_t x = 1;			// Fine tune with PSX
 int y;
 int num[]= {48,49,50,51,52,53,54,55,56,57};
 int pwm1 = 0;
@@ -94,7 +94,8 @@ typedef struct
 		uint64_t TimeStamp[2];
 		float QEIPostion_1turn;
 		int QEIAngularVelocity;
-	}QEI_StructureTypeDef;
+	}
+	QEI_StructureTypeDef;
 	QEI_StructureTypeDef QEIdata = {0};
 	uint64_t _micros = 0;
 	enum
@@ -179,7 +180,6 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-<<<<<<< HEAD
   	  QEIReadRaw = __HAL_TIM_GET_COUNTER(&htim2); // Encoder QEI
   	  static uint64_t timestamps =0;
   	  int64_t currentTime = micros();
@@ -191,58 +191,6 @@ int main(void)
   	  }
 
 
-	  if (start == 1){
-		static uint32_t timestamp =0;
-		if(timestamp < HAL_GetTick())
-		{
-		  timestamp = HAL_GetTick()+0.5;
-
-		  velo[i] = QEIdata.QEIAngularVelocity;
-
-		  data_packet[1] = (uint8_t)(QEIdata.QEIAngularVelocity & 0x00FF); // Mask with 0x00FF to get LSB
-		  data_packet[2]  = (uint8_t)(QEIdata.QEIAngularVelocity >> 8)& 0x00FF; // Shift right 8 bits to get MSB
-
-		  // Transmit data over UART
-		  for (int i = 0; i < sizeof(data_packet); i++)
-		  {
-			HAL_UART_Transmit(&hlpuart1, &data_packet[i], 1, 5);
-		  }
-
-
-		  /// j = 1
-		  if (i == (j*2000)){
-			  j++;
-		  }
-
-		  if ((j%2) == 0){
-			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, (j/2)*3*pwm);
-//			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1000);
-			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
-		  }
-
-		  if ((j%2) == 1){
-			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
-		  }
-		  if (j == 18){
-			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
-		  }
-		  i++;
-
-		}
-
-	  }
-=======
-//  	  QEIReadRaw = __HAL_TIM_GET_COUNTER(&htim2); // Encoder QEI
-//  	  static uint64_t timestamps =0;
-//  	  int64_t currentTime = micros();
-//
-//  	  if(currentTime > timestamps)
-//  	  {
-//  		  timestamps = currentTime + 100000;//us
-//  		  QEIEncoderPosVel_Update();
-//  	  }
-//
-//
 //	  if (start == 1){
 //		static uint32_t timestamp =0;
 //		if(timestamp < HAL_GetTick())
@@ -259,6 +207,7 @@ int main(void)
 //		  {
 //			HAL_UART_Transmit(&hlpuart1, &data_packet[i], 1, 5);
 //		  }
+//
 //
 //		  /// j = 1
 //		  if (i == (j*2000)){
@@ -282,7 +231,7 @@ int main(void)
 //		}
 //
 //	  }
->>>>>>> a661b0f9c5aa1ba70d68584add76c2f4b3976fa0
+
 
 //	  	  if(mode == 1)
 //	  	  {
@@ -711,8 +660,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PA4 PA6 */
-  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_6;
+  /*Configure GPIO pins : Photo_Base_Pin Photo_Top_Pin */
+  GPIO_InitStruct.Pin = Photo_Base_Pin|Photo_Top_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -723,6 +672,24 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Reed_Pull_Pin */
+  GPIO_InitStruct.Pin = Reed_Pull_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(Reed_Pull_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Eme_logic_Pin */
+  GPIO_InitStruct.Pin = Eme_logic_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(Eme_logic_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Reed_Push_Pin */
+  GPIO_InitStruct.Pin = Reed_Push_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(Reed_Push_GPIO_Port, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
@@ -786,7 +753,7 @@ void PS2X_Reader()
 	if (ps2rx[0] == 69) 		//Press L4 to switch to use Joy stick
 	{
 		mode = 1;
-		ps2vpos = 123;
+		ps2vpos = 132;
 	}
 	if (ps2rx[0] == 70)		//Press L5 to switch to use Button
 	{
@@ -796,14 +763,14 @@ void PS2X_Reader()
 	if (mode == 1)
 	{
 		//Read Ps2 Joy stick in VERTICAL
-		if(ps2rx[0] == 87){
-			if (ps2rx[2] == 80){
+		if(ps2rx[0] == 81){
+			if (ps2rx[2] == 83){
 				y = 1;
 			}
-			else if (ps2rx[3] == 80){
+			else if (ps2rx[3] == 83){
 				y = 2;
 			}
-			else if (ps2rx[4] == 80){
+			else if (ps2rx[4] == 83){
 				y = 3;
 			}
 			for(int k=1 ; k<5 ; k++){
@@ -824,7 +791,7 @@ void PS2X_Reader()
 			}
 
 //			  //Read Ps2 Joy stick in HORIZON
-//			  if (ps2rx[0] == 80 && ps2rx[2] == 13)
+//			  if (ps2rx[0] == 83 && ps2rx[2] == 13)
 //			  {
 //				  for (int i = 0; i < 10 ; i++)
 //				  {
@@ -835,7 +802,7 @@ void PS2X_Reader()
 //				  }
 //				  ps2hpos = h[0];
 //			  }
-//			  else if (ps2rx[0] == 80 && ps2rx[3] == 13)
+//			  else if (ps2rx[0] == 83 && ps2rx[3] == 13)
 //			  {
 //				  for (int i = 0; i < 10 ; i++)
 //				  {
@@ -850,7 +817,7 @@ void PS2X_Reader()
 //				  }
 //				  ps2hpos = (h[0]*10)+h[1];
 //			  }
-//			  else if (ps2rx[0] == 80 && ps2rx[4] == 13)
+//			  else if (ps2rx[0] == 83 && ps2rx[4] == 13)
 //			  {
 //				  for (int i = 0; i < 10 ; i++)
 //				  {
@@ -872,8 +839,8 @@ void PS2X_Reader()
 		}
 
 		//Convert from 0 - 255 to -128 - 128
-		ps2v = ((ps2vpos - 123)*128)/127.0;
-		ps2h = ((ps2hpos - 123)*128)/127.0;
+		ps2v = ps2vpos - 132;
+		ps2h = ps2hpos - 132;
 
 		//Generate PWM
 		pwm1 = (ps2v / 128.0)*300;
@@ -901,16 +868,16 @@ void PS2X_Reader()
 	else if (mode == 2)
 	{
 		//////////////////////BUG BUG BUG BUG BUG BUG BUG BUG//////////////////////////////
-		if (l[6] == 1 && mode == 2){
-			f[fuck] = 1+fuck;
-			fuck++;
-		}
-		/// this upper code for checking in Live Expression about Floor Seclection
-		//---- Reset Floor in Array f[] ----//
-		if (r[0] == 1 && mode == 2){
-			f[fuck-1] = 0;
-			fuck--;
-		}
+//		if (l[6] == 1 && mode == 2){
+//			f[fuck] = 1+fuck;
+//			fuck++;
+//		}
+//		/// this upper code for checking in Live Expression about Floor Seclection
+//		//---- Reset Floor in Array f[] ----//
+//		if (r[0] == 1 && mode == 2){
+//			f[fuck-1] = 0;
+//			fuck--;
+//		}
 		//////////////////////BUG BUG BUG BUG BUG BUG BUG BUG//////////////////////////////
 		ps2v = 0;
 		ps2h = 0;
@@ -986,21 +953,20 @@ void PS2X_Reader()
 			__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);		//Stop
 			__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
 			motor =0;			//motor is not working for checking in Live Expression
-
 		}
 	}
 
 	//---- Floor Seclection ----//
-//	if (ps2rx[0] == 71){
-//		f[countfloor] = 1+countfloor;
-//		countfloor++;
-//	}
-//		/// this upper code for checking in Live Expression about Floor Seclection
-//	//---- Reset Floor in Array f[] ----//
-//	if (ps2rx[0] == 73){
-//		f[countfloor-1] = 0;
-//		countfloor--;
-//	}
+	if (ps2rx[0] == 71){
+		f[fuck] = 1+fuck;
+		fuck= fuck +1;
+	}
+		/// this upper code for checking in Live Expression about Floor Seclection
+	//---- Reset Floor in Array f[] ----//
+	else if (ps2rx[0] == 73){
+		f[fuck-1] = 0;
+		fuck = fuck -1;
+	}
 
 	if (ps2rx[0] == 74){
 		stop = 1;
@@ -1034,13 +1000,6 @@ void Automatic_Control()
 			  {
 				  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, Vfeedback);
 				  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1000);
-			  }
-			  static uint64_t timestamps =0;
-			  int64_t currentTime = micros();
-			  if(currentTime > timestamps)
-			  {
-			  timestamps =currentTime + 100000;//us
-			  QEIEncoderPosVel_Update();
 			  }
 }
 

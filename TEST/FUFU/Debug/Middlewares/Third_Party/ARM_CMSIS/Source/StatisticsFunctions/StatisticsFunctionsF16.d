@@ -1,6 +1,10 @@
 Middlewares/Third_Party/ARM_CMSIS/Source/StatisticsFunctions/StatisticsFunctionsF16.o: \
  ../Middlewares/Third_Party/ARM_CMSIS/Source/StatisticsFunctions/StatisticsFunctionsF16.c \
+<<<<<<< HEAD
  C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_max_f16.c \
+=======
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_max_f16.c \
+>>>>>>> 9b4fa2369da5fcc0c216ebcc5ae4d72abeaa21a2
  ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/statistics_functions_f16.h \
  ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_types_f16.h \
  ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_types.h \
@@ -14,6 +18,7 @@ Middlewares/Third_Party/ARM_CMSIS/Source/StatisticsFunctions/StatisticsFunctions
  ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions_f16.h \
  ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions.h \
  ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/basic_math_functions.h \
+<<<<<<< HEAD
  C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_min_f16.c \
  C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_mean_f16.c \
  C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_power_f16.c \
@@ -33,6 +38,27 @@ Middlewares/Third_Party/ARM_CMSIS/Source/StatisticsFunctions/StatisticsFunctions
  C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_mse_f16.c \
  C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_accumulate_f16.c
 C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_max_f16.c:
+=======
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_min_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_mean_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_power_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_rms_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_std_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_var_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_entropy_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_kullback_leibler_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_logsumexp_dot_prod_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_logsumexp_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_max_no_idx_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_min_no_idx_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_absmax_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_absmin_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_absmax_no_idx_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_absmin_no_idx_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_mse_f16.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_accumulate_f16.c
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_max_f16.c:
+>>>>>>> 9b4fa2369da5fcc0c216ebcc5ae4d72abeaa21a2
 ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/statistics_functions_f16.h:
 ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_types_f16.h:
 ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_types.h:
@@ -46,6 +72,7 @@ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/Statistics
 ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions_f16.h:
 ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions.h:
 ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/basic_math_functions.h:
+<<<<<<< HEAD
 C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_min_f16.c:
 C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_mean_f16.c:
 C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_power_f16.c:
@@ -64,3 +91,23 @@ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/Statistics
 C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_absmin_no_idx_f16.c:
 C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_mse_f16.c:
 C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_accumulate_f16.c:
+=======
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_min_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_mean_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_power_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_rms_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_std_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_var_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_entropy_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_kullback_leibler_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_logsumexp_dot_prod_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_logsumexp_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_max_no_idx_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_min_no_idx_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_absmax_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_absmin_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_absmax_no_idx_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_absmin_no_idx_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_mse_f16.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/StatisticsFunctions/arm_accumulate_f16.c:
+>>>>>>> 9b4fa2369da5fcc0c216ebcc5ae4d72abeaa21a2

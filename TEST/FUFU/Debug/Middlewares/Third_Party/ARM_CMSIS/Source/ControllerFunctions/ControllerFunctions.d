@@ -1,6 +1,10 @@
 Middlewares/Third_Party/ARM_CMSIS/Source/ControllerFunctions/ControllerFunctions.o: \
  ../Middlewares/Third_Party/ARM_CMSIS/Source/ControllerFunctions/ControllerFunctions.c \
+<<<<<<< HEAD
  C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_init_f32.c \
+=======
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_init_f32.c \
+>>>>>>> 9b4fa2369da5fcc0c216ebcc5ae4d72abeaa21a2
  ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/controller_functions.h \
  ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_types.h \
  ../Drivers/CMSIS/Include/cmsis_compiler.h \
@@ -9,6 +13,7 @@ Middlewares/Third_Party/ARM_CMSIS/Source/ControllerFunctions/ControllerFunctions
  ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_types.h \
  ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/none.h \
  ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/utils.h \
+<<<<<<< HEAD
  C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_init_q15.c \
  C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_init_q31.c \
  C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_reset_f32.c \
@@ -20,6 +25,19 @@ Middlewares/Third_Party/ARM_CMSIS/Source/ControllerFunctions/ControllerFunctions
  ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/basic_math_functions.h \
  C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_sin_cos_q31.c
 C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_init_f32.c:
+=======
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_init_q15.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_init_q31.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_reset_f32.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_reset_q15.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_reset_q31.c \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_sin_cos_f32.c \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_common_tables.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/basic_math_functions.h \
+ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_sin_cos_q31.c
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_init_f32.c:
+>>>>>>> 9b4fa2369da5fcc0c216ebcc5ae4d72abeaa21a2
 ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/controller_functions.h:
 ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_types.h:
 ../Drivers/CMSIS/Include/cmsis_compiler.h:
@@ -28,6 +46,7 @@ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/Controller
 ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_types.h:
 ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/none.h:
 ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/utils.h:
+<<<<<<< HEAD
 C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_init_q15.c:
 C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_init_q31.c:
 C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_reset_f32.c:
@@ -38,3 +57,15 @@ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/Controller
 ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions.h:
 ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/basic_math_functions.h:
 C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_sin_cos_q31.c:
+=======
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_init_q15.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_init_q31.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_reset_f32.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_reset_q15.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_pid_reset_q31.c:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_sin_cos_f32.c:
+../Middlewares/Third_Party/ARM_CMSIS/Include/arm_common_tables.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/basic_math_functions.h:
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/ControllerFunctions/arm_sin_cos_q31.c:
+>>>>>>> 9b4fa2369da5fcc0c216ebcc5ae4d72abeaa21a2

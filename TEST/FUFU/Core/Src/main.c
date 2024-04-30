@@ -191,6 +191,60 @@ int main(void)
   	  }
 
 
+<<<<<<< HEAD
+=======
+	  if (start == 1){
+		static uint32_t timestamp =0;
+		if(timestamp < HAL_GetTick())
+		{
+		  timestamp = HAL_GetTick()+0.5;
+
+		  velo[i] = QEIdata.QEIAngularVelocity;
+
+		  data_packet[1] = (uint8_t)(QEIdata.QEIAngularVelocity & 0x00FF); // Mask with 0x00FF to get LSB
+		  data_packet[2]  = (uint8_t)(QEIdata.QEIAngularVelocity >> 8)& 0x00FF; // Shift right 8 bits to get MSB
+
+		  // Transmit data over UART
+		  for (int i = 0; i < sizeof(data_packet); i++)
+		  {
+			HAL_UART_Transmit(&hlpuart1, &data_packet[i], 1, 5);
+		  }
+
+
+		  /// j = 1
+		  if (i == (j*2000)){
+			  j++;
+		  }
+
+		  if ((j%2) == 0){
+			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, (j/2)*3*pwm);
+//			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1000);
+			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
+		  }
+
+		  if ((j%2) == 1){
+			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
+		  }
+		  if (j == 18){
+			  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
+		  }
+		  i++;
+
+		}
+
+	  }
+//  	  QEIReadRaw = __HAL_TIM_GET_COUNTER(&htim2); // Encoder QEI
+//  	  static uint64_t timestamps =0;
+//  	  int64_t currentTime = micros();
+//
+//  	  if(currentTime > timestamps)
+//  	  {
+//  		  timestamps = currentTime + 100000;//us
+//  		  QEIEncoderPosVel_Update();
+//  	  }
+//
+//
+>>>>>>> 9b4fa2369da5fcc0c216ebcc5ae4d72abeaa21a2
 //	  if (start == 1){
 //		static uint32_t timestamp =0;
 //		if(timestamp < HAL_GetTick())
@@ -231,7 +285,10 @@ int main(void)
 //		}
 //
 //	  }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9b4fa2369da5fcc0c216ebcc5ae4d72abeaa21a2
 
 //	  	  if(mode == 1)
 //	  	  {
@@ -241,7 +298,22 @@ int main(void)
 //	  	  {
 //	  		Automatic_Control();
 //	  	  }
-	  PS2X_Reader();
+	  HAL_UART_Receive(&huart4,ps2rx, 10 ,10);
+
+	  if(ps2rx[0] == 74){
+		  stop = 1;
+	  }
+
+	  if (stop == 1 && ps2rx[0] == 75){
+		  stop = 0;
+		  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);		//Stop
+		  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
+		  pwm1 = 0;
+	  }
+
+	  else if(stop == 0){
+		  PS2X_Reader();
+	  }
 
 
   }
@@ -593,7 +665,7 @@ static void MX_TIM5_Init(void)
   htim5.Instance = TIM5;
   htim5.Init.Prescaler = 169;
   htim5.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim5.Init.Period = 4294967295;
+  htim5.Init.Period = 4.294967295E9;
   htim5.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim5.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim5) != HAL_OK)
@@ -746,7 +818,6 @@ void QEIEncoderPosVel_Update()
 void PS2X_Reader()
 {
 	///----- Stage 1: Jogging and Floor selection -----///
-	HAL_UART_Receive(&huart4,ps2rx, 10 ,10);
 	ps2v = 0;
 	ps2h = 0;
 	on = 0;

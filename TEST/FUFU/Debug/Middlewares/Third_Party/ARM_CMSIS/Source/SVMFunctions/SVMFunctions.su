@@ -1,4 +1,5 @@
 ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/svm_functions.h:65:27:arm_exponent_f32	24	static
+<<<<<<< HEAD
 C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/SVMFunctions/arm_svm_linear_init_f32.c:72:6:arm_svm_linear_init_f32	32	static
 C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/SVMFunctions/arm_svm_linear_predict_f32.c:435:6:arm_svm_linear_predict_f32	48	static
 C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/SVMFunctions/arm_svm_polynomial_init_f32.c:70:6:arm_svm_polynomial_init_f32	40	static
@@ -7,3 +8,13 @@ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/SVMFunctio
 C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/SVMFunctions/arm_svm_rbf_predict_f32.c:495:6:arm_svm_rbf_predict_f32	56	static
 C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/SVMFunctions/arm_svm_sigmoid_init_f32.c:68:6:arm_svm_sigmoid_init_f32	40	static
 C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/SVMFunctions/arm_svm_sigmoid_predict_f32.c:460:6:arm_svm_sigmoid_predict_f32	56	static
+=======
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/SVMFunctions/arm_svm_linear_init_f32.c:72:6:arm_svm_linear_init_f32	32	static
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/SVMFunctions/arm_svm_linear_predict_f32.c:435:6:arm_svm_linear_predict_f32	48	static
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/SVMFunctions/arm_svm_polynomial_init_f32.c:70:6:arm_svm_polynomial_init_f32	40	static
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/SVMFunctions/arm_svm_polynomial_predict_f32.c:462:6:arm_svm_polynomial_predict_f32	56	static
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/SVMFunctions/arm_svm_rbf_init_f32.c:68:6:arm_svm_rbf_init_f32	32	static
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/SVMFunctions/arm_svm_rbf_predict_f32.c:495:6:arm_svm_rbf_predict_f32	56	static
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/SVMFunctions/arm_svm_sigmoid_init_f32.c:68:6:arm_svm_sigmoid_init_f32	40	static
+C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/SVMFunctions/arm_svm_sigmoid_predict_f32.c:460:6:arm_svm_sigmoid_predict_f32	56	static
+>>>>>>> 9b4fa2369da5fcc0c216ebcc5ae4d72abeaa21a2

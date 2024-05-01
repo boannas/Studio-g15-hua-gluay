@@ -62,18 +62,33 @@ void Error_Handler(void);
 #define B1_Pin GPIO_PIN_13
 #define B1_GPIO_Port GPIOC
 #define B1_EXTI_IRQn EXTI15_10_IRQn
+<<<<<<< HEAD
+=======
 #define LPUART1_TX_Pin GPIO_PIN_2
 #define LPUART1_TX_GPIO_Port GPIOA
 #define LPUART1_RX_Pin GPIO_PIN_3
 #define LPUART1_RX_GPIO_Port GPIOA
+#define Photo_Base_Pin GPIO_PIN_4
+#define Photo_Base_GPIO_Port GPIOA
+#define Photo_Base_EXTI_IRQn EXTI4_IRQn
+>>>>>>> 4ef317d6e417b837b7079534382ca3cb1ef0ae51
 #define LD2_Pin GPIO_PIN_5
 #define LD2_GPIO_Port GPIOA
+#define Photo_Top_Pin GPIO_PIN_6
+#define Photo_Top_GPIO_Port GPIOA
+#define Photo_Top_EXTI_IRQn EXTI9_5_IRQn
+#define Reed_Pull_Pin GPIO_PIN_7
+#define Reed_Pull_GPIO_Port GPIOA
+#define Eme_logic_Pin GPIO_PIN_7
+#define Eme_logic_GPIO_Port GPIOC
 #define T_SWDIO_Pin GPIO_PIN_13
 #define T_SWDIO_GPIO_Port GPIOA
 #define T_SWCLK_Pin GPIO_PIN_14
 #define T_SWCLK_GPIO_Port GPIOA
 #define T_SWO_Pin GPIO_PIN_3
 #define T_SWO_GPIO_Port GPIOB
+#define Reed_Push_Pin GPIO_PIN_6
+#define Reed_Push_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

@@ -60,8 +60,8 @@ all: main-build
 main-build: Traj.elf secondary-outputs
 
 # Tool invocations
-Traj.elf Traj.map: $(OBJS) $(USER_OBJS) C:\Users\napat\STM32CubeIDE\workspace_1.13.2\Traj\STM32G474RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Traj.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\napat\STM32CubeIDE\workspace_1.13.2\Traj\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Traj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Traj.elf Traj.map: $(OBJS) $(USER_OBJS) C:\Users\napat\Documents\GitHub\Studio-g15-hua-gluay\Traj\STM32G474RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Traj.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\napat\Documents\GitHub\Studio-g15-hua-gluay\Traj\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Traj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

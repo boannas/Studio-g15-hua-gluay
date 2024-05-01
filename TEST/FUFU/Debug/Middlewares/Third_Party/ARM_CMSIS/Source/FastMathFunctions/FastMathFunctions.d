@@ -1,6 +1,10 @@
 Middlewares/Third_Party/ARM_CMSIS/Source/FastMathFunctions/FastMathFunctions.o: \
  ../Middlewares/Third_Party/ARM_CMSIS/Source/FastMathFunctions/FastMathFunctions.c \
+<<<<<<< HEAD
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_cos_f32.c \
+=======
  C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_cos_f32.c \
+>>>>>>> 9b4fa2369da5fcc0c216ebcc5ae4d72abeaa21a2
  ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions.h \
  ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_types.h \
  ../Drivers/CMSIS/Include/cmsis_compiler.h \
@@ -12,6 +16,27 @@ Middlewares/Third_Party/ARM_CMSIS/Source/FastMathFunctions/FastMathFunctions.o: 
  ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/basic_math_functions.h \
  ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_common_tables.h \
  ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions.h \
+<<<<<<< HEAD
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_cos_q15.c \
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_cos_q31.c \
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_sin_f32.c \
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_sin_q15.c \
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_sin_q31.c \
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_sqrt_q31.c \
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_sqrt_q15.c \
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_vexp_f32.c \
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_vexp_f64.c \
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_vlog_f32.c \
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_vlog_f64.c \
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_divide_q15.c \
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_divide_q31.c \
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_vlog_q31.c \
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_vlog_q15.c \
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_atan2_f32.c \
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_atan2_q31.c \
+ C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_atan2_q15.c
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_cos_f32.c:
+=======
  C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_cos_q15.c \
  C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_cos_q31.c \
  C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_sin_f32.c \
@@ -31,6 +56,7 @@ Middlewares/Third_Party/ARM_CMSIS/Source/FastMathFunctions/FastMathFunctions.o: 
  C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_atan2_q31.c \
  C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_atan2_q15.c
 C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_cos_f32.c:
+>>>>>>> 9b4fa2369da5fcc0c216ebcc5ae4d72abeaa21a2
 ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions.h:
 ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_types.h:
 ../Drivers/CMSIS/Include/cmsis_compiler.h:
@@ -42,6 +68,26 @@ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/S
 ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/basic_math_functions.h:
 ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_common_tables.h:
 ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions.h:
+<<<<<<< HEAD
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_cos_q15.c:
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_cos_q31.c:
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_sin_f32.c:
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_sin_q15.c:
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_sin_q31.c:
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_sqrt_q31.c:
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_sqrt_q15.c:
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_vexp_f32.c:
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_vexp_f64.c:
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_vlog_f32.c:
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_vlog_f64.c:
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_divide_q15.c:
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_divide_q31.c:
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_vlog_q31.c:
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_vlog_q15.c:
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_atan2_f32.c:
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_atan2_q31.c:
+C:/Users/napat/Documents/GitHub/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_atan2_q15.c:
+=======
 C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_cos_q15.c:
 C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_cos_q31.c:
 C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_sin_f32.c:
@@ -60,3 +106,4 @@ C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/S
 C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_atan2_f32.c:
 C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_atan2_q31.c:
 C:/Users/porpo/OneDrive/Documents/GitHub/studio/Studio-g15-hua-gluay/TEST/FUFU/Source/FastMathFunctions/arm_atan2_q15.c:
+>>>>>>> 9b4fa2369da5fcc0c216ebcc5ae4d72abeaa21a2

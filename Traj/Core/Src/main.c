@@ -45,7 +45,7 @@ UART_HandleTypeDef hlpuart1;
 TIM_HandleTypeDef htim6;
 
 /* USER CODE BEGIN PV */
-float Pos_initial = 0.0f;
+float Pos_initial = 1000.0f;
 float Pos_final = 600.0f;
 float Velo_max = 500.0f; // units per second
 float Accel_max = 450.0f; // units per second squared
@@ -116,9 +116,22 @@ int main(void)
   Distance = Pos_final - Pos_initial;
   Time_acc = Velo_max / Accel_max;
   Time_dec = Time_acc;
-  Time_acc_under = sqrt(Distance/Accel_max);
-  Distance_Velo_Max = Distance - (Velo_max * Time_acc);
-  Time_Velo_const = Distance_Velo_Max / Velo_max;
+  if (Distance >0)
+		{
+	  Time_acc_under = sqrt(Distance/Accel_max);
+	  Distance_Velo_Max = Distance - (Velo_max * Time_acc);
+	  Time_Velo_const = Distance_Velo_Max / Velo_max;
+		}
+  else if(Distance < 0)
+  {
+	  Accel_max = -Accel_max;
+	  Velo_max = -Velo_max;
+	  Time_acc_under = sqrt(Distance/Accel_max);
+	  Distance_Velo_Max = Distance - (Velo_max * Time_acc);
+	  Time_Velo_const = Distance_Velo_Max / Velo_max;
+}
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -134,7 +147,7 @@ int main(void)
 	         {
 	             // Clear the update flag
 	             __HAL_TIM_CLEAR_FLAG(&htim6, TIM_FLAG_UPDATE);
-	             elapsedTime += 0.001;
+	             elapsedTime += 0.00001;
 
 				// Update trajectory phase
 	            float time_ref1 = Time_acc + Time_Velo_const;
@@ -319,7 +332,7 @@ static void MX_TIM6_Init(void)
   htim6.Instance = TIM6;
   htim6.Init.Prescaler = 169;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 1000;
+  htim6.Init.Period = 10;
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {

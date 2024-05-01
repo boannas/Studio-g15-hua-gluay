@@ -1,3 +1,48 @@
+<<<<<<< HEAD
+../Core/Inc/Basesystem.h:34:6:Heartbeat	4	static
+../Core/Inc/Basesystem.h:39:6:Routine	4	static
+../Core/Inc/Basesystem.h:53:6:Vacuum	4	static
+../Core/Inc/Basesystem.h:63:6:GripperMovement	4	static
+../Core/Inc/Basesystem.h:73:6:SetShelves	4	static
+../Core/Inc/Basesystem.h:89:6:SetGoalPoint	4	static
+../Core/Inc/Basesystem.h:94:6:RunPointMode	4	static
+../Core/Src/main.c:139:5:main	8	static
+../Core/Src/main.c:333:6:SystemClock_Config	88	static
+../Core/Src/main.c:380:13:MX_TIM2_Init	56	static
+../Core/Src/main.c:429:13:MX_TIM3_Init	64	static
+../Core/Src/main.c:492:13:MX_TIM4_Init	40	static
+../Core/Src/main.c:537:13:MX_TIM5_Init	40	static
+../Core/Src/main.c:582:13:MX_TIM16_Init	8	static
+../Core/Src/main.c:618:13:MX_UART4_Init	8	static
+../Core/Src/main.c:666:13:MX_USART2_UART_Init	8	static
+../Core/Src/main.c:712:13:MX_DMA_Init	16	static
+../Core/Src/main.c:734:13:MX_GPIO_Init	48	static
+../Core/Src/main.c:784:6:HAL_TIM_PeriodElapsedCallback	16	static
+../Core/Src/main.c:801:6:QEIEncoderPosVel_Update	24	static
+../Core/Src/main.c:824:6:PS2X_Reader	24	static
+../Core/Src/main.c:1060:6:Automatic_Control	40	static
+../Core/Src/main.c:1090:6:HAL_GPIO_EXTI_Callback	16	static
+../Core/Src/main.c:1118:6:Error_Handler	4	static,ignoring_inline_asm
+=======
+<<<<<<< HEAD
+../Core/Src/main.c:132:5:main	24	static
+../Core/Src/main.c:257:6:SystemClock_Config	88	static
+../Core/Src/main.c:304:13:MX_ADC1_Init	56	static
+../Core/Src/main.c:372:13:MX_LPUART1_UART_Init	8	static
+../Core/Src/main.c:419:13:MX_UART4_Init	8	static
+../Core/Src/main.c:467:13:MX_TIM2_Init	56	static
+../Core/Src/main.c:516:13:MX_TIM3_Init	64	static
+../Core/Src/main.c:579:13:MX_TIM5_Init	40	static
+../Core/Src/main.c:622:13:MX_DMA_Init	16	static
+../Core/Src/main.c:641:13:MX_GPIO_Init	48	static
+../Core/Src/main.c:691:6:HAL_TIM_PeriodElapsedCallback	24	static
+../Core/Src/main.c:699:10:micros	12	static
+../Core/Src/main.c:704:6:QEIEncoderPosVel_Update	24	static
+../Core/Src/main.c:727:6:PS2X_Reader	24	static
+../Core/Src/main.c:966:6:Automatic_Control	40	static
+../Core/Src/main.c:996:6:HAL_GPIO_EXTI_Callback	16	static
+../Core/Src/main.c:1023:6:Error_Handler	4	static,ignoring_inline_asm
+=======
 ../Core/Src/main.c:132:5:main	32	static
 ../Core/Src/main.c:321:6:SystemClock_Config	88	static
 ../Core/Src/main.c:368:13:MX_ADC1_Init	56	static
@@ -15,3 +60,5 @@
 ../Core/Src/main.c:1029:6:Automatic_Control	40	static
 ../Core/Src/main.c:1059:6:HAL_GPIO_EXTI_Callback	16	static
 ../Core/Src/main.c:1086:6:Error_Handler	4	static,ignoring_inline_asm
+>>>>>>> 9b4fa2369da5fcc0c216ebcc5ae4d72abeaa21a2
+>>>>>>> 4ef317d6e417b837b7079534382ca3cb1ef0ae51

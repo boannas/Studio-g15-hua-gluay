@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (11.3.rel1)
+# Toolchain: GNU Tools for STM32 (12.3.rel1)
 ################################################################################
 
 -include ../makefile.init
@@ -75,8 +75,13 @@ all: main-build
 main-build: FUFU.elf secondary-outputs
 
 # Tool invocations
+<<<<<<< HEAD
+FUFU.elf FUFU.map: $(OBJS) $(USER_OBJS) C:\Users\napat\Documents\GitHub\Studio-g15-hua-gluay\TEST\FUFU\STM32G474RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "FUFU.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\napat\Documents\GitHub\Studio-g15-hua-gluay\TEST\FUFU\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="FUFU.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+=======
 FUFU.elf FUFU.map: $(OBJS) $(USER_OBJS) C:\Users\porpo\OneDrive\Documents\GitHub\studio\Studio-g15-hua-gluay\TEST\FUFU\STM32G474RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	arm-none-eabi-gcc -o "FUFU.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\porpo\OneDrive\Documents\GitHub\studio\Studio-g15-hua-gluay\TEST\FUFU\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="FUFU.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+>>>>>>> 9b4fa2369da5fcc0c216ebcc5ae4d72abeaa21a2
 	@echo 'Finished building target: $@'
 	@echo ' '
 

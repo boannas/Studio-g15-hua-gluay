@@ -45,8 +45,8 @@ UART_HandleTypeDef hlpuart1;
 TIM_HandleTypeDef htim6;
 
 /* USER CODE BEGIN PV */
-float Pos_initial = 1000.0f;
-float Pos_final = 600.0f;
+//float Pos_initial = 100.0f;
+//float Pos_final = 550.0f;
 float Velo_max = 500.0f; // units per second
 float Accel_max = 450.0f; // units per second squared
 
@@ -63,6 +63,8 @@ float Distance_Velo_Max;
 float Time_Velo_const;
 float temp_pos_acc;
 float temp_pos_const;
+int complete;
+int mode = 0 ;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -71,7 +73,7 @@ static void MX_GPIO_Init(void);
 static void MX_LPUART1_UART_Init(void);
 static void MX_TIM6_Init(void);
 /* USER CODE BEGIN PFP */
-
+void Traject(float Pos_fi,float Pos_ini);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -113,23 +115,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   HAL_TIM_Base_Start(&htim6);
-  Distance = Pos_final - Pos_initial;
-  Time_acc = Velo_max / Accel_max;
-  Time_dec = Time_acc;
-  if (Distance >0)
-		{
-	  Time_acc_under = sqrt(Distance/Accel_max);
-	  Distance_Velo_Max = Distance - (Velo_max * Time_acc);
-	  Time_Velo_const = Distance_Velo_Max / Velo_max;
-		}
-  else if(Distance < 0)
-  {
-	  Accel_max = -Accel_max;
-	  Velo_max = -Velo_max;
-	  Time_acc_under = sqrt(Distance/Accel_max);
-	  Distance_Velo_Max = Distance - (Velo_max * Time_acc);
-	  Time_Velo_const = Distance_Velo_Max / Velo_max;
-}
+
 
 
   /* USER CODE END 2 */
@@ -141,79 +127,47 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  if(mode ==0)
+	  {
+		  if (__HAL_TIM_GET_FLAG(&htim6, TIM_FLAG_UPDATE) != RESET)
+		         {
+		             // Clear the update flag
+		             __HAL_TIM_CLEAR_FLAG(&htim6, TIM_FLAG_UPDATE);
+		             elapsedTime += 0.00001;
+		            	 Traject(500.0,1000.0);
+				}
+	  }
+	  if(mode ==1)
+	  {
+		  if (__HAL_TIM_GET_FLAG(&htim6, TIM_FLAG_UPDATE) != RESET)
+		         {
+		             // Clear the update flag
+		             __HAL_TIM_CLEAR_FLAG(&htim6, TIM_FLAG_UPDATE);
+		             elapsedTime += 0.00001;
+		            	 Traject(600.0,500.0);
+				}
+	  }
+	  if(mode ==2)
+	  {
+		  if (__HAL_TIM_GET_FLAG(&htim6, TIM_FLAG_UPDATE) != RESET)
+		         {
+		             // Clear the update flag
+		             __HAL_TIM_CLEAR_FLAG(&htim6, TIM_FLAG_UPDATE);
+		             elapsedTime += 0.00001;
+		            	 Traject(2000.0,600.0);
+				}
+	  }
+	  if(mode ==3)
+	  {
+		  if (__HAL_TIM_GET_FLAG(&htim6, TIM_FLAG_UPDATE) != RESET)
+		         {
+		             // Clear the update flag
+		             __HAL_TIM_CLEAR_FLAG(&htim6, TIM_FLAG_UPDATE);
+		             elapsedTime += 0.00001;
+		            	 Traject(400.0,2000.0);
+				}
+	  }
 
-
-	  if (__HAL_TIM_GET_FLAG(&htim6, TIM_FLAG_UPDATE) != RESET)
-	         {
-	             // Clear the update flag
-	             __HAL_TIM_CLEAR_FLAG(&htim6, TIM_FLAG_UPDATE);
-	             elapsedTime += 0.00001;
-
-				// Update trajectory phase
-	            float time_ref1 = Time_acc + Time_Velo_const;
-	            float time_ref2 = time_ref1 + Time_dec;
-	            if(Time_Velo_const >0)
-	            {
-	            	if (elapsedTime < Time_acc)
-					{
-						// Acceleration phase
-						currentAcceleration = Accel_max;
-						currentVelocity = Accel_max * elapsedTime;
-						currentPosition = 0.5f * Accel_max * elapsedTime * elapsedTime + Pos_initial;
-						temp_pos_acc = currentPosition;
-						temp_pos_const = currentPosition;
-					}
-					else if (elapsedTime < time_ref1 )
-					{
-						// Constant velocity phase
-						currentAcceleration = 0;
-						currentVelocity = Velo_max;
-						currentPosition = (Velo_max * (elapsedTime-Time_acc)) + temp_pos_acc;
-						temp_pos_const = currentPosition;
-					}
-					else if (elapsedTime < time_ref2)
-					{
-						// Deceleration phase
-						currentAcceleration = -Accel_max;
-						currentVelocity = -(Accel_max * (elapsedTime-time_ref1)) + Velo_max;
-						currentPosition = currentVelocity*(elapsedTime-time_ref1)+(0.5f*Accel_max*(elapsedTime-time_ref1)*(elapsedTime-time_ref1))+temp_pos_const ;
-					}
-					else {
-						// Trajectory complete
-						currentAcceleration = 0.0f;
-						currentVelocity = 0.0f;
-						currentPosition = 0.0f;
-					}
-	            }
-	            else if (Time_Velo_const<0)
-	            {
-	            	float temp_velo_acc;
-//	            	currentPosition++;
-	            	if (elapsedTime < Time_acc_under)
-	            	{
-	            		currentAcceleration = Accel_max;
-	            		currentVelocity = Accel_max * elapsedTime;
-						currentPosition = Pos_initial + 0.5f * Accel_max * elapsedTime * elapsedTime;
-						temp_pos_acc = currentPosition;
-						temp_velo_acc = currentVelocity;
-	            	}
-	            	else if (elapsedTime < 2*Time_acc_under)
-	            	{
-	            		currentAcceleration = -Accel_max;
-	            		currentVelocity = temp_velo_acc - Accel_max*(elapsedTime-Time_acc_under);
-						currentPosition = temp_pos_acc + currentVelocity *(elapsedTime-Time_acc_under)+(0.5f*Accel_max*(elapsedTime-Time_acc_under)*(elapsedTime-Time_acc_under));
-	            	}
-	            	else
-	            	{
-	            		currentAcceleration = 0.0f;
-	            		currentVelocity = 0.0f;
-						currentPosition = 0.0f;
-	            	}
-
-
-	            }
-
-			}
 
   }
   /* USER CODE END 3 */
@@ -392,7 +346,95 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void Traject(float Pos_fi,float Pos_ini)
+{
+	  Distance = Pos_fi - Pos_ini;
+	  Time_acc = Velo_max / Accel_max;
+	  Time_dec = Time_acc;
+	  if (Distance >0)
+			{
+		  Distance_Velo_Max = Distance - (Velo_max * Time_acc);
+		  Time_Velo_const = Distance_Velo_Max / Velo_max;
+			}
+	  else if(Distance < 0)
+	  {
+		  Accel_max = -Accel_max;
+		  Velo_max = -Velo_max;
+		  Distance_Velo_Max = Distance - (Velo_max * Time_acc);
+		  Time_Velo_const = Distance_Velo_Max / Velo_max;
+	}
+	// Update trajectory phase
+	float time_ref1 = Time_acc + Time_Velo_const;
+	float time_ref2 = time_ref1 + Time_dec;
+//	if(Time_Velo_const >0)
+//	{
+//		Time_acc_under = sqrt(Distance/Accel_max);
+//		if (elapsedTime < Time_acc)
+//		{
+//			// Acceleration phase
+//			currentAcceleration = Accel_max;
+//			currentVelocity = Accel_max * elapsedTime;
+//			currentPosition = 0.5f * Accel_max * elapsedTime * elapsedTime + Pos_ini;
+//			temp_pos_acc = currentPosition;
+//			temp_pos_const = currentPosition;
+//		}
+//		else if (elapsedTime < time_ref1 )
+//		{
+//			// Constant velocity phase
+//			currentAcceleration = 0;
+//			currentVelocity = Velo_max;
+//			currentPosition = (Velo_max * (elapsedTime-Time_acc)) + temp_pos_acc;
+//			temp_pos_const = currentPosition;
+//		}
+//		else if (elapsedTime < time_ref2)
+//		{
+//			// Deceleration phase
+//			currentAcceleration = -Accel_max;
+//			currentVelocity = -(Accel_max * (elapsedTime-time_ref1)) + Velo_max;
+//			currentPosition = currentVelocity*(elapsedTime-time_ref1)+(0.5f*Accel_max*(elapsedTime-time_ref1)*(elapsedTime-time_ref1))+temp_pos_const ;
+//		}
+//		else {
+//			// Trajectory complete
+//			currentAcceleration = 0.0f;
+//			currentVelocity = 0.0f;
+//			 elapsedTime = 0.0f;
+////			 mode ++;
+////						currentPosition = 0.0f;
+//		}
+//	}
+//	if (Time_Velo_const<0)
+//	{
+//		float temp_velo_acc;
+//		Time_acc_under = sqrt(Distance/Accel_max);
+////	            	currentPosition++;
+//		if (elapsedTime < Time_acc_under)
+//		{
+//			currentAcceleration = Accel_max;
+//			currentVelocity = Accel_max * elapsedTime;
+//			currentPosition = Pos_ini + 0.5f * Accel_max * elapsedTime * elapsedTime;
+//			temp_pos_acc = currentPosition;
+//			temp_velo_acc = currentVelocity;
+////			mode ++;
+//		}
+//		else if (elapsedTime < 2*Time_acc_under)
+//		{
+//			currentAcceleration = -Accel_max;
+//			currentVelocity = temp_velo_acc - Accel_max*(elapsedTime-Time_acc_under);
+//			currentPosition = temp_pos_acc + currentVelocity *(elapsedTime-Time_acc_under)+(0.5f*Accel_max*(elapsedTime-Time_acc_under)*(elapsedTime-Time_acc_under));
+////			mode ++;
+//		}
+//		else
+//		{
+//			currentAcceleration = 0.0f;
+//			currentVelocity = 0.0f;
+//			 elapsedTime = 0.0f;
+////			 mode ++;
+////						currentPosition = 0.0f;
+//		}
+//
+//
+//	}
+}
 /* USER CODE END 4 */
 
 /**

@@ -62,6 +62,8 @@ void Error_Handler(void);
 #define B1_Pin GPIO_PIN_13
 #define B1_GPIO_Port GPIOC
 #define B1_EXTI_IRQn EXTI15_10_IRQn
+<<<<<<< HEAD
+=======
 #define LPUART1_TX_Pin GPIO_PIN_2
 #define LPUART1_TX_GPIO_Port GPIOA
 #define LPUART1_RX_Pin GPIO_PIN_3
@@ -69,6 +71,10 @@ void Error_Handler(void);
 #define Photo_Base_Pin GPIO_PIN_4
 #define Photo_Base_GPIO_Port GPIOA
 #define Photo_Base_EXTI_IRQn EXTI4_IRQn
+<<<<<<< HEAD
+=======
+>>>>>>> 4ef317d6e417b837b7079534382ca3cb1ef0ae51
+>>>>>>> b5dcfd5e0c6d315aa72c33243fed083d82ea5181
 #define LD2_Pin GPIO_PIN_5
 #define LD2_GPIO_Port GPIOA
 #define Photo_Top_Pin GPIO_PIN_6

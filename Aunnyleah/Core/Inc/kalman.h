@@ -11,7 +11,6 @@
 #include "main.h"
 #include "arm_math.h"
 
-
 typedef struct KalmanParams{
 	float32_t X_k[4];
 	float32_t P_k[16];

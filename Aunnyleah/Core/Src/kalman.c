@@ -9,7 +9,6 @@
 #include "arm_math.h"
 
 float Kalman_Speed = 0;
-
 //// Define initial state of X_pk and P_pk
 //arm_matrix_instance_f32 X_k_matrix;
 //arm_matrix_instance_f32 P_k_matrix;
@@ -105,7 +104,7 @@ float SteadyStateKalmanFilter(KalmanFilter* filter, float32_t Vin,float32_t Velo
 }
 
 void Kalman_Start(KalmanFilter* filter){
-	filter->Q = 0.05f; //0.05
+	filter->Q = 0.8f; //0.05
 	filter->R[0] = 1.0f;
 
 	float32_t a[16] = {1.0f, 0.000982689988788924f, -0.644498552609241f, 0.00685085398621353f,
@@ -193,5 +192,4 @@ void Kalman_Start(KalmanFilter* filter){
 	arm_mat_init_f32(&filter->R_matrix, 1, 1, filter->R);
 	arm_mat_init_f32(&filter->Z_matrix, 1, 1, filter->Z);
 }
-
 

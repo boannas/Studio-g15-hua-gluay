@@ -1,0 +1,12 @@
+../Core/Src/Base.c:16:6:Base_init	16	static
+../Core/Src/Base.c:43:6:ResetState	4	static
+../Core/Src/Base.c:47:6:easyCase	4	static
+../Core/Src/Base.c:54:6:heart	4	static
+../Core/Src/Base.c:58:6:Routine	4	static
+../Core/Src/Base.c:72:6:Vacuum	4	static
+../Core/Src/Base.c:81:6:GripperMovement	4	static
+../Core/Src/Base.c:90:6:SetShelves	4	static
+../Core/Src/Base.c:108:6:RunPoint	4	static
+../Core/Src/Base.c:120:6:SetHome	4	static
+../Core/Src/Base.c:130:6:RunJog	4	static
+../Core/Src/Base.c:144:6:Select_case	8	static

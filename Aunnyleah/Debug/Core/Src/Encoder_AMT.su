@@ -1,4 +1,4 @@
-../Core/Src/Encoder_AMT.c:18:6:AMT_encoder_init	16	static
-../Core/Src/Encoder_AMT.c:26:6:AMT_encoder_update	40	static
-../Core/Src/Encoder_AMT.c:60:6:AMT_encoder_reset	16	static
-../Core/Src/Encoder_AMT.c:67:7:lowPassFilter	16	static
+../Core/Src/Encoder_AMT.c:26:6:AMT_encoder_init	16	static
+../Core/Src/Encoder_AMT.c:34:6:AMT_encoder_update	48	static
+../Core/Src/Encoder_AMT.c:71:6:AMT_encoder_reset	16	static
+../Core/Src/Encoder_AMT.c:78:7:lowPassFilter	24	static

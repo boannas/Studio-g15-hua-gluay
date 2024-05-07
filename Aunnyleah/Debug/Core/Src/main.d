@@ -28,9 +28,42 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
- ../Core/Inc/Encoder.h ../Core/Inc/main.h ../Core/Inc/Motor.h \
- ../Core/Inc/PID_controller.h ../Core/Inc/Encoder.h \
- ../Core/Inc/Trapezoidal.h
+ ../Core/Inc/kalman.h ../Core/Inc/main.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_types.h \
+ ../Drivers/CMSIS/Include/cmsis_compiler.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_memory.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/none.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_types.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/utils.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/basic_math_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_memory.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/none.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/utils.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/interpolation_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/bayes_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/statistics_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/basic_math_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/matrix_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/complex_math_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/statistics_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/controller_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/support_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/distance_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/matrix_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/svm_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/svm_defines.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/transform_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/complex_math_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/filtering_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/support_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/quaternion_math_functions.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/window_functions.h \
+ ../Core/Inc/Encoder.h ../Core/Inc/Motor.h ../Core/Inc/PID_controller.h \
+ ../Core/Inc/Encoder.h ../Core/Inc/Trapezoidal.h ../Core/Inc/PS2.h \
+ ../Core/Inc/Modbus.h ../Core/Inc/Base.h
 ../Core/Inc/main.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:
 ../Core/Inc/stm32g4xx_hal_conf.h:
@@ -61,9 +94,45 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h:
-../Core/Inc/Encoder.h:
+../Core/Inc/kalman.h:
 ../Core/Inc/main.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_types.h:
+../Drivers/CMSIS/Include/cmsis_compiler.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_memory.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/none.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_types.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/utils.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/basic_math_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/arm_math_memory.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/none.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/utils.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/interpolation_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/bayes_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/statistics_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/basic_math_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/matrix_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/complex_math_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/statistics_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/controller_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/support_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/distance_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/matrix_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/svm_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/svm_defines.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/fast_math_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/transform_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/complex_math_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/filtering_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/support_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/quaternion_math_functions.h:
+../Middlewares/Third_Party/ARM_CMSIS/Include/dsp/window_functions.h:
+../Core/Inc/Encoder.h:
 ../Core/Inc/Motor.h:
 ../Core/Inc/PID_controller.h:
 ../Core/Inc/Encoder.h:
 ../Core/Inc/Trapezoidal.h:
+../Core/Inc/PS2.h:
+../Core/Inc/Modbus.h:
+../Core/Inc/Base.h:

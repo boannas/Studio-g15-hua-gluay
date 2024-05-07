@@ -7,12 +7,20 @@
 
 #include "Encoder.h"
 #include "main.h"
+#include "kalman.h"
+#include "PID_controller.h"
 
+// Import variable from other .c file
+extern KalmanFilter Vel_filtered;
+extern PID_struct PID_velo;
+
+// AMT Resolution & pulley size
 uint32_t cnt_per_rev = 8192.0;
-float pulley_cir = 2.0*(22.0/7.0)*12.5;				//mm
+float pulley_cir = 2.0*(22.0/7.0)*12.5;				// millimeter
+
+// Define variable in this library
 int32_t diffPosition;
 float diffTime;
-float filtered_data;
 float ALPHA = 0.3f;
 
 void AMT_encoder_init(AMT_Encoder *AMT_data,TIM_HandleTypeDef *Encoder_timer)
@@ -45,9 +53,12 @@ void AMT_encoder_update(AMT_Encoder *AMT_data, TIM_HandleTypeDef *Encoder_timer,
 	diffTime = (AMT_data->TimeStamp[QEI_NOW] - AMT_data->TimeStamp[QEI_PREV] );
 
 	//calculate anglar velocity
-	AMT_data->Angular_Velocity = (diffPosition * 60.0) / (cnt_per_rev * (diffTime / 1e6));	//RPM
+	float Vin = (PID_velo.out/1000)*24;
+//	AMT_data->Angular_Velocity = lowPassFilter(SteadyStateKalmanFilter(&Vel_filtered,Vin, (diffPosition * 60.0) / (cnt_per_rev * (diffTime / 1e6))));	//RPM
+	AMT_data->Angular_Velocity = lowPassFilter((&Vel_filtered,Vin, (diffPosition * 60.0) / (cnt_per_rev * (diffTime / 1e6))));	//RPM
+
 	AMT_data->Linear_Position += (diffPosition*pulley_cir)/cnt_per_rev;			//mm
-	AMT_data->Linear_Velocity = lowPassFilter((AMT_data->Angular_Velocity / 60.0) * pulley_cir);		//mm/s
+	AMT_data->Linear_Velocity = (AMT_data->Angular_Velocity / 60.0) * pulley_cir;		//mm/s
 	AMT_data->Linear_Velo[QEI_NOW] = AMT_data->Linear_Velocity;					//Uodate Velo
 //	AMT_data->Linear_Acceleration = ((AMT_data->Linear_Velo[QEI_NOW] - AMT_data->Linear_Velo[QEI_PREV]) *  1000000.0) / (diffTime);		//mm/s^2
 
@@ -66,6 +77,6 @@ void AMT_encoder_reset(AMT_Encoder *AMT_data)
 
 float lowPassFilter(float raw_data) {
     // Apply exponential moving average filter
-    filtered_data = ALPHA * raw_data + (1.0f - ALPHA) * filtered_data;
+    float filtered_data = ALPHA * raw_data + (1.0f - ALPHA) * filtered_data;
     return filtered_data;
 }

@@ -11,6 +11,9 @@ void MOTOR_init(MOTOR* MT,TIM_HandleTypeDef* htimx,uint16_t timd_chx,uint16_t ti
 	MT->htimx = htimx;
 	MT->timd_chx = timd_chx;
 	MT->timp_chx = timp_chx;
+	HAL_TIM_PWM_Start_IT(htimx, timp_chx);		// PWM
+	HAL_TIM_PWM_Start_IT(htimx, timd_chx);		// Direction
+
 }
 
 void MOTOR_set_duty(MOTOR* MT, float percent_duty)

@@ -9,6 +9,21 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include Middlewares/Third_Party/ARM_CMSIS/Source/TransformFunctions/subdir.mk
+-include Middlewares/Third_Party/ARM_CMSIS/Source/SupportFunctions/subdir.mk
+-include Middlewares/Third_Party/ARM_CMSIS/Source/StatisticsFunctions/subdir.mk
+-include Middlewares/Third_Party/ARM_CMSIS/Source/SVMFunctions/subdir.mk
+-include Middlewares/Third_Party/ARM_CMSIS/Source/QuaternionMathFunctions/subdir.mk
+-include Middlewares/Third_Party/ARM_CMSIS/Source/MatrixFunctions/subdir.mk
+-include Middlewares/Third_Party/ARM_CMSIS/Source/InterpolationFunctions/subdir.mk
+-include Middlewares/Third_Party/ARM_CMSIS/Source/FilteringFunctions/subdir.mk
+-include Middlewares/Third_Party/ARM_CMSIS/Source/FastMathFunctions/subdir.mk
+-include Middlewares/Third_Party/ARM_CMSIS/Source/DistanceFunctions/subdir.mk
+-include Middlewares/Third_Party/ARM_CMSIS/Source/ControllerFunctions/subdir.mk
+-include Middlewares/Third_Party/ARM_CMSIS/Source/ComplexMathFunctions/subdir.mk
+-include Middlewares/Third_Party/ARM_CMSIS/Source/CommonTables/subdir.mk
+-include Middlewares/Third_Party/ARM_CMSIS/Source/BayesFunctions/subdir.mk
+-include Middlewares/Third_Party/ARM_CMSIS/Source/BasicMathFunctions/subdir.mk
 -include Drivers/STM32G4xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk

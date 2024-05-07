@@ -1,0 +1,2 @@
+../Core/Src/PS2.c:20:6:PS2_init	16	static
+../Core/Src/PS2.c:39:6:PS2X_Reader	24	static

@@ -65,13 +65,15 @@ DMA_HandleTypeDef hdma_usart2_rx;
 // Define
 AMT_Encoder AMT;
 MOTOR MT;
+PID_struct PID;
 PID_struct PID_pos;
 PID_struct PID_velo;
 Trap_Traj Traj;
 KalmanFilter Vel_filtered;
 ModbusHandleTypedef hmodbus;
 extern u16u8_t registerFrame[200];
-extern BaseStruct base;
+BaseStruct base;
+PS2_typedef ps2;
 // Define some variables
 uint64_t _micros;					//
 int ppp ;
@@ -168,6 +170,7 @@ MOTOR_init(&MT, &htim3,TIM_CHANNEL_2, TIM_CHANNEL_1);
 PID_controller_init(&PID_pos,PID_pos_K[0],PID_pos_K[1],PID_pos_K[2]);
 PID_controller_init(&PID_velo,PID_velo_K[0],PID_velo_K[1],PID_velo_K[3]);
 Base_init(&base);
+PS2_init(&ps2);
 
 // Modbus & Joystick
 hmodbus.huart = &huart2;
@@ -201,6 +204,21 @@ Modbus_init(&hmodbus, registerFrame);
 				 elapsedTime += 0.00001;
 				 Traject(&Traj, 0.0, 600.0);
 			}
+	  }
+
+	  HAL_UART_Receive(&huart4,ps2.ps2RX, 10 ,10);
+	  if(ps2.ps2RX[0] == 74){
+		  ps2.stop = 1;
+	  }
+	  if (ps2.stop == 1 && ps2.ps2RX[0] == 75){
+		  ps2.stop = 0;
+		  ps2.pwmOut = 150;
+		  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, ps2.pwmOut);		//Stop and Holf Position
+		  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
+
+	  }
+	  else if(ps2.stop == 0){
+		  PS2X_Reader();
 	  }
 
 
@@ -614,7 +632,7 @@ static void MX_UART4_Init(void)
   {
     Error_Handler();
   }
-  if (HAL_UARTEx_SetRxFifoThreshold(&huart4, UART_RXFIFO_THRESHOLD_8_8) != HAL_OK)
+  if (HAL_UARTEx_SetRxFifoThreshold(&huart4, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK)
   {
     Error_Handler();
   }
@@ -765,8 +783,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)			// Timer Interrupt
 	}
 	if(htim->Instance == TIM4)				// 2000 Hz
 	{
-		PID_controller_cascade(&PID_pos, &PID_velo, &AMT, Traj.currentPosition);
-		MOTOR_set_duty(&MT, PID_velo.out);
+		if (ps2.mode == 2){
+			PID_controller_calculate_pos(&PID_pos,&AMT,ps2.PIDPos);
+			MOTOR_set_duty(&MT,PID.out);
+		}
+//		PID_controller_cascade(&PID_pos, &PID_velo, &AMT, Traj.currentPosition);
+		if (ps2.mode == 1){
+			MOTOR_set_duty(&MT,ps2.pwmOut);
+		}
 
 	}
 

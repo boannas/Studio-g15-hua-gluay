@@ -29,7 +29,8 @@ Core/Src/PS2.o: ../Core/Src/PS2.c ../Core/Inc/Base.h ../Core/Inc/Modbus.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
  ../Core/Inc/PS2.h ../Core/Inc/main.h ../Core/Inc/main.h \
- ../Core/Inc/Motor.h ../Core/Inc/Encoder.h
+ ../Core/Inc/Motor.h ../Core/Inc/Encoder.h ../Core/Inc/PID_controller.h \
+ ../Core/Inc/Encoder.h
 ../Core/Inc/Base.h:
 ../Core/Inc/Modbus.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:
@@ -65,4 +66,6 @@ Core/Src/PS2.o: ../Core/Src/PS2.c ../Core/Inc/Base.h ../Core/Inc/Modbus.h \
 ../Core/Inc/main.h:
 ../Core/Inc/main.h:
 ../Core/Inc/Motor.h:
+../Core/Inc/Encoder.h:
+../Core/Inc/PID_controller.h:
 ../Core/Inc/Encoder.h:

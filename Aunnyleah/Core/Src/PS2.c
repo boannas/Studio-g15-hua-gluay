@@ -10,9 +10,11 @@
 #include "Motor.h"
 #include "Modbus.h"
 #include "Encoder.h"
+#include "PID_controller.h"
 
 int num[10]= {48,49,50,51,52,53,54,55,56,57};
 float count = 1;
+extern PID_struct PID_pos;
 extern BaseStruct base;
 extern AMT_Encoder AMT;
 extern MOTOR MT;
@@ -32,9 +34,9 @@ void PS2_init(PS2_typedef* PS2)
     PS2->stop = 0;
     PS2->counts = 0;
     PS2->PIDPos = 0;
+    PS2->on = 0;
 }
-
-PS2_typedef ps2;
+extern PS2_typedef ps2;
 
 void PS2X_Reader()
 {
@@ -43,11 +45,13 @@ void PS2X_Reader()
 	if (ps2.ps2RX[0] == 69) 		//Press L4 to switch to use Joy stick
 	{
 		ps2.mode = 1;
+		ps2.on = 0;
 //		ps2.ps2YPos = 132;
 	}
 	if (ps2.ps2RX[0] == 70)		//Press L5 to switch to use Button
 	{
 		ps2.mode = 2;
+		ps2.on =1;
 		ps2.PIDPos = AMT.Linear_Position;
 
 
@@ -90,14 +94,14 @@ void PS2X_Reader()
 
 		//Generate PWM
 		ps2.pwmOut = ((ps2.ps2Y/ 132.0)*300) + 150;
-		ps2.pwmOut = 255 - ps2.ps2YPos;
+		ps2.pwmOut = 320 - ps2.ps2YPos;
 		if (ps2.pwmOut > 300)
 		{
 			ps2.pwmOut = 300;
 		}
 		if (ps2.pwmOut < -300)
 		{
-			ps2.pwmOut = -300;
+			ps2.pwmOut = 0;
 		}
 		if (ps2.pwmOut < 0)
 		{
@@ -112,6 +116,8 @@ void PS2X_Reader()
 	//--- Mode Button ---//
 	else if (ps2.mode == 2)
 	{
+//		ps2.PIDPos = AMT.Linear_Position;
+		ps2.on = 1;
 		ps2.ps2Y = 0;
 //		ps2.ps2X = 0;
 		//Keys Map
@@ -155,15 +161,19 @@ void PS2X_Reader()
 		//Generate PWM
 		if (ps2.l[2] == 1)
 		{
-			ps2.pwmOut = ps2.pwmOut - count;	// - PWM with x
-			if (ps2.pwmOut < 0)
-			{
-				ps2.pwmOut = 0;		// to make pwm1 >= 0
-			}
+			//Adjust How to decrease(-) Linear position
+			ps2.PIDPos -= 0.1;
+//			ps2.pwmOut = ps2.pwmOut - count;	// - PWM with x
+//			if (ps2.pwmOut < 0)
+//			{
+//				ps2.pwmOut = 0;		// to make pwm1 >= 0
+//			}
 		}
 		else if (ps2.l[3] == 1)
 		{
-			ps2.pwmOut = ps2.pwmOut + count;	// + PWM with count
+			//Adjust How to increase(+) Linear position
+			ps2.PIDPos += 0.1;
+//			ps2.pwmOut = ps2.pwmOut + count;	// + PWM with count
 		}
 		else if (ps2.l[0] == 1)		//Press down button(l1) to PWM out forward
 		{
@@ -188,7 +198,7 @@ void PS2X_Reader()
 	// Floor Selection
 	if(base.ShelveMode == 1){
 		if (ps2.ps2RX[0] == 71){
-			base.Shelve[ps2.counts] = 1+ps2.counts;
+			base.Shelve[ps2.counts-1] = ps2.PIDPos;
 			ps2.counts=  +1;
 		}
 		else if (ps2.ps2RX[0] == 73){

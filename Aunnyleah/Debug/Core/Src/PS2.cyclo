@@ -1,2 +1,2 @@
-../Core/Src/PS2.c:20:6:PS2_init	1
-../Core/Src/PS2.c:39:6:PS2X_Reader	35
+../Core/Src/PS2.c:22:6:PS2_init	1
+../Core/Src/PS2.c:41:6:PS2X_Reader	34

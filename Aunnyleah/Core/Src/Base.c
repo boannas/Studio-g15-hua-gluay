@@ -8,7 +8,7 @@
 #include "main.h"
 #include "kalman.h"
 #include "Base.h"
-BaseStruct base;
+extern BaseStruct base;
 
 u16u8_t registerFrame[200];
 

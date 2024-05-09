@@ -41,7 +41,7 @@ typedef struct{
 }BaseStruct;
 
 //------------ Function ------------//
-//void Base_init();
+void Base_init();
 //void ResetState();
 //void easyCase(){;
 //void heart();

@@ -25,7 +25,10 @@ typedef struct
     int stop;
     int counts;
     float PIDPos;
+    int on;
 	} PS2_typedef;
 
+void PS2X_Reader();
+void PS2_init();
 
 #endif /* INC_PS2_H_ */

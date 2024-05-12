@@ -80,6 +80,8 @@ BaseStruct base;
 // Define some variables
 uint64_t _micros;					//
 int ppp ;
+int fff;
+int jjj;
 uint8_t fixps2[10];
 float elapsedTime = 0.0f;			// Total elapsed time in seconds
 float i = 0;
@@ -186,6 +188,18 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+
+	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_5, ppp);
+	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, fff);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, jjj);
+	  static uint64_t timestamp =0;
+	  int64_t currentTime = HAL_GetTick();
+	  if(currentTime > timestamp)
+	  {
+	  timestamp =currentTime + 1;//ms
+	  AMT_encoder_update(&AMT, &htim2, micros());
+	  }
+
 	  //Modbus
 	  easyCase();
 	  switch(base.bS){
@@ -713,7 +727,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, LD2_Pin|Push_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, Pull_Pin|Suck_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
@@ -721,12 +738,31 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : LD2_Pin */
-  GPIO_InitStruct.Pin = LD2_Pin;
+  /*Configure GPIO pins : Top_Limit_Pin Base_Limit_Pin Reed_pull_Pin */
+  GPIO_InitStruct.Pin = Top_Limit_Pin|Base_Limit_Pin|Reed_pull_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : LD2_Pin Push_Pin */
+  GPIO_InitStruct.Pin = LD2_Pin|Push_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : Pull_Pin Suck_Pin */
+  GPIO_InitStruct.Pin = Pull_Pin|Suck_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Reed_push_Pin */
+  GPIO_InitStruct.Pin = Reed_push_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(Reed_push_GPIO_Port, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);

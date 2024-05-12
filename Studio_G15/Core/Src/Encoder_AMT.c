@@ -27,8 +27,8 @@ void AMT_encoder_init(AMT_Encoder *AMT_data,TIM_HandleTypeDef *Encoder_timer)
 {
 	AMT_data->EncoderTIM = Encoder_timer;
 	HAL_TIM_Encoder_Start(AMT_data->EncoderTIM, TIM_CHANNEL_ALL);
-	AMT_data->Position[QEI_NOW] = 10.0;
-	AMT_data->Position[QEI_PREV] = 10.0;
+	AMT_data->Position[QEI_NOW] = 0.0;
+	AMT_data->Position[QEI_PREV] = 0.0;
 }
 
 void AMT_encoder_update(AMT_Encoder *AMT_data, TIM_HandleTypeDef *Encoder_timer, uint64_t current_time)
@@ -55,7 +55,7 @@ void AMT_encoder_update(AMT_Encoder *AMT_data, TIM_HandleTypeDef *Encoder_timer,
 	//calculate anglar velocity
 	float Vin = (PID_velo.out/1000)*24;
 //	AMT_data->Angular_Velocity = lowPassFilter(SteadyStateKalmanFilter(&Vel_filtered,Vin, (diffPosition * 60.0) / (cnt_per_rev * (diffTime / 1e6))));	//RPM
-	AMT_data->Angular_Velocity = lowPassFilter((&Vel_filtered,Vin, (diffPosition * 60.0) / (cnt_per_rev * (diffTime / 1e6))));	//RPM
+	AMT_data->Angular_Velocity = (diffPosition * 60.0) / (cnt_per_rev * (diffTime / 1e6));	//RPM
 
 	AMT_data->Linear_Position += (diffPosition*pulley_cir)/cnt_per_rev;			//mm
 	AMT_data->Linear_Velocity = (AMT_data->Angular_Velocity / 60.0) * pulley_cir;		//mm/s

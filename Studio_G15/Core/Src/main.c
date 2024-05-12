@@ -272,8 +272,18 @@ int main(void)
 //		  base.ReedStatus = 0b0000;
 //	  }
 
-	  base.ReedStatus = (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == SET && HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7) == RESET)?0b0001:
-			  	  	  	(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == RESET && HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7) == SET)?0b0010:0b0000;
+	  // Alternative form
+	  int pinCombination = (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) << 1) | HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7);
+	  switch(pinCombination) {
+	      case 2: // Binary 10: B is SET, A is RESET
+	          base.ReedStatus = 0b0001;
+	          break;
+	      case 1: // Binary 01: B is RESET, A is SET
+	          base.ReedStatus = 0b0010;
+	          break;
+	      default:
+	          base.ReedStatus = 0b0000;
+	  }
 
 	  Modbus_Protocal_Worker();
 	  Routine();

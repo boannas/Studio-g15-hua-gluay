@@ -1,2 +1,2 @@
-../Core/Src/Motor.c:9:6:MOTOR_init	24	static
-../Core/Src/Motor.c:19:6:MOTOR_set_duty	72	static
+../Core/Src/Motor.c:13:6:MOTOR_init	24	static
+../Core/Src/Motor.c:23:6:MOTOR_set_duty	72	static

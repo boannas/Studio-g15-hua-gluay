@@ -4,7 +4,11 @@
  *  Created on: May 4, 2024
  *      Author: napat
  */
+
+// Include Library here !
 #include "Motor.h"
+
+//-------------------------------------------Function Code-------------------------------------------------------//
 
 void MOTOR_init(MOTOR* MT,TIM_HandleTypeDef* htimx,uint16_t timd_chx,uint16_t timp_chx)
 {

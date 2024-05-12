@@ -28,7 +28,9 @@ Core/Src/BaseSystem.o: ../Core/Src/BaseSystem.c ../Core/Inc/BaseSystem.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
- ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h
+ ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
+ ../Core/Inc/main.h ../Core/Inc/Encoder.h ../Core/Inc/main.h \
+ ../Core/Inc/Motor.h
 ../Core/Inc/BaseSystem.h:
 ../Core/Inc/ModBusRTU.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:
@@ -60,3 +62,7 @@ Core/Src/BaseSystem.o: ../Core/Src/BaseSystem.c ../Core/Inc/BaseSystem.h \
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h:
+../Core/Inc/main.h:
+../Core/Inc/Encoder.h:
+../Core/Inc/main.h:
+../Core/Inc/Motor.h:

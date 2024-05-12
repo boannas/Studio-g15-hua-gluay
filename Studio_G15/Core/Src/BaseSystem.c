@@ -4,7 +4,19 @@
  *  Created on: May 12, 2024
  *      Author: porpo
  */
+
+// Include Library here !
 #include "BaseSystem.h"
+#include "main.h"
+#include "Encoder.h"
+#include "Motor.h"
+#include "stm32g4xx_hal.h"
+
+// Import variable from other .c file
+extern AMT_Encoder AMT;
+extern MOTOR MT;
+
+//-------------------------------------------Function Code-------------------------------------------------------//
 
 void Reset(){
 	registerFrame[0x01].U16 = 0;
@@ -27,19 +39,19 @@ void Routine(){
 	if(registerFrame[0x00].U16 == 18537)
 	{
 		//Gripper 0x04 not sure!?!?
-//		  registerFrame[0x04].U16 = 0b0000;
-//		  registerFrame[0x04].U16 = 0b0001;   //Gripper status 0b0010 = 0000 0000 0000 0010
-		registerFrame[0x10].U16 = base.bStatus;	//Z-axis status 0010 = 1
-		registerFrame[0x11].U16 = 1		*10;	//Z-axis position
-		registerFrame[0x12].U16 = 2		*10;	//Z-axis speed
-		registerFrame[0x13].U16 = 3		*10;	//Z-axis acceleration
-		registerFrame[0x40].U16 = 4		*10;	//X-axis position
+		registerFrame[0x04].U16 = base.ReedStatus;   					//Gripper status 0b0010 = 0000 0000 0000 0010
+		registerFrame[0x10].U16 = base.bStatus;							//Z-axis status 0010 = 1
+		registerFrame[0x11].U16 = AMT.Linear_Position			*10;	//Z-axis position
+		registerFrame[0x12].U16 = fabs(AMT.Linear_Velocity)		*10;	//Z-axis speed
+		registerFrame[0x13].U16 = fabs(AMT.Linear_Acceleration)	*10;	//Z-axis acceleration
+		registerFrame[0x40].U16 = 4								*10;	//X-axis position
 	}
 }
 
 void Vacuum(){
 	if(registerFrame[0x02].U16 == 0b0000){
 		base.Vacuum = 0;			//Vacuum status: Off
+
 	}
 	else if(registerFrame[0x02].U16 == 0b0001){
 		base.Vacuum = 1;			//Vacuum status: On
@@ -54,6 +66,8 @@ void GripperMovement(){
 		base.Gripper = 1;			//Gripper Movement: Forward
 	}
 }
+
+
 
 void SetShelves(){
 	registerFrame[0x10].U16 = 1; 		//Z-axis update z-xis moving status to "Set Shelves"
@@ -87,12 +101,22 @@ void RunPoint(){
 
 void SetHome(){
 	registerFrame[0x10].U16 = 2;
-	if(base.sh == 1){
-		base.bStatus = 0;
-		registerFrame[0x01].U16 = base.bStatus;
-		registerFrame[0x10].U16 = 0;
-		base.sh = 0;
-	}
+	base.MotorHome = 400;
+	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6) == GPIO_PIN_SET)		// Top photo limit was triggered
+		{
+			base.MotorHome = 150;
+			AMT_encoder_reset(&AMT);
+			base.bStatus = 0;
+			registerFrame[0x01].U16 = base.bStatus;
+			registerFrame[0x10].U16 = 0;
+		}
+//	if(base.sh == 1)
+//	{
+//		base.bStatus = 0;
+//		registerFrame[0x01].U16 = base.bStatus;
+//		registerFrame[0x10].U16 = 0;
+//		base.sh = 0;
+//	}
 //	base.bS = 0;
 //	registerFrame[0x01].U16 = 0;
 }

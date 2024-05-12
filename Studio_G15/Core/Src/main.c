@@ -62,33 +62,28 @@ DMA_HandleTypeDef hdma_usart2_tx;
 DMA_HandleTypeDef hdma_usart2_rx;
 
 /* USER CODE BEGIN PV */
-ModbusHandleTypedef hmodbus;
-u16u8_t registerFrame[200];
 
-
-AMT_Encoder AMT;
+// Define some library variable
 MOTOR MT;
-PID_struct PID;
-PID_struct PID_pos;
-PID_struct PID_velo;
-Trap_Traj Traj;
-KalmanFilter Vel_filtered;
+AMT_Encoder AMT;
 PS2_typedef ps2;
-BaseStruct base;
-
+extern PID_struct PID_pos;
+extern PID_struct PID_velo;
+extern Trap_Traj Traj;
+extern KalmanFilter Vel_filtered;
+extern BaseStruct base;
+ModbusHandleTypedef hmodbus;
 
 // Define some variables
-uint64_t _micros;					//
-int ppp ;
-int fff;
-int jjj;
+uint64_t _micros;					// Microsecond
 uint8_t fixps2[10];
 float elapsedTime = 0.0f;			// Total elapsed time in seconds
 float i = 0;
+u16u8_t registerFrame[200];
+
+// Function here!
 uint64_t micros();
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
-
-
 
 /* USER CODE END PV */
 
@@ -189,14 +184,21 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_5, ppp);
-	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, fff);
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, jjj);
+	  // Feedback to base system 5 Hz
+	  static uint64_t timestamps =0;
+	  if(HAL_GetTick() > timestamps)
+	  {
+		  timestamps =HAL_GetTick() + 100;		//ms
+	  	  Heartbeat();
+	  }
+
+
+	  // Read AMT encoder 1000 Hz
 	  static uint64_t timestamp =0;
 	  int64_t currentTime = HAL_GetTick();
 	  if(currentTime > timestamp)
 	  {
-	  timestamp =currentTime + 1;//ms
+	  timestamp =currentTime + 1;				//ms
 	  AMT_encoder_update(&AMT, &htim2, micros());
 	  }
 
@@ -229,28 +231,53 @@ int main(void)
 		  break;
 	  }
 
+	  // Vacuum Status
 	  switch(base.vS){
 	  case 0:
 		  base.Vacuum = 0;
+		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_5, RESET);			// Vacuum off
 		  break;
 	  case 1:
 		  base.Vacuum = 1;
+		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_5, SET);			// Vacuum on
 		  break;
 	  }
 
+
+	  // Gripper Movement Status
 	  switch(base.gmS){
 	  case 0:
 		  base.Gripper = 0;
+		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, SET);			// Backward
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, RESET);
 		  break;
 	  case 1:
 		  base.Gripper = 1;
+		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, RESET);			//Forward
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, SET);
 		  break;
 	  }
 
+	  // Reed Switch Status
+//	  if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == SET && HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7) == RESET)
+//	  {
+//		  base.ReedStatus = 0b0001;
+//	  }
+//	  else if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == RESET && HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7) == SET)
+//	  {
+//		  base.ReedStatus = 0b0010;
+//	  }
+//	  else
+//	  {
+//		  base.ReedStatus = 0b0000;
+//	  }
+
+	  base.ReedStatus = (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == SET && HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7) == RESET)?0b0001:
+			  	  	  	(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == RESET && HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7) == SET)?0b0010:0b0000;
 
 	  Modbus_Protocal_Worker();
 	  Routine();
-//	  //--
+
 //	  //Ps2
 	  HAL_UART_Receive(&huart4,ps2.ps2RX, 10 ,10);
 	  if(ps2.ps2RX[0] == 74){
@@ -261,12 +288,10 @@ int main(void)
 		  ps2.pwmOut = 150;
 		  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, ps2.pwmOut);		//Stop and Holf Position
 		  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
-
 	  }
 	  else if(ps2.stop == 0){
 		  PS2X_Reader();
 	  }
-	  //--
   }
   /* USER CODE END 3 */
 }
@@ -386,9 +411,9 @@ static void MX_TIM3_Init(void)
 
   /* USER CODE END TIM3_Init 1 */
   htim3.Instance = TIM3;
-  htim3.Init.Prescaler = 169;
+  htim3.Init.Prescaler = 1;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 1000;
+  htim3.Init.Period = 42499;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
@@ -450,7 +475,7 @@ static void MX_TIM4_Init(void)
   htim4.Instance = TIM4;
   htim4.Init.Prescaler = 1699;
   htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim4.Init.Period = 19999;
+  htim4.Init.Period = 499;
   htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
@@ -780,9 +805,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			{
 			_micros += UINT32_MAX;
 			}
-		if(htim == &htim4)
+		if(htim == &htim4)								// 2000 Hz
 		{
-			 Heartbeat();
+			MOTOR_set_duty(&MT, base.MotorHome);
+
 		}
 	}
 

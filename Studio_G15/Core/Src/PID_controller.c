@@ -4,14 +4,21 @@
  *  Created on: May 4, 2024
  *      Author: porpo
  */
+
+// Include Library here !
 #include "PID_controller.h"
 #include "Trapezoidal.h"
 #include "Encoder.h"
 #include "main.h"
 
-extern Trap_Traj Traj;
+// Import variable from other .c file
+Trap_Traj Traj;
 
+// Define variable inside library
 float boundary = 0.05;
+
+//-------------------------------------------Function Code-------------------------------------------------------//
+
 void PID_controller_init(PID_struct* PID,float UP_Kp, float UP_Ki, float UP_Kd)
 {
  PID->Kp = UP_Kp;

@@ -9,6 +9,7 @@
 
 #define MODBUS_UART_BUFFER_SIZE 300
 
+// Import variable from other .c file
 ModbusHandleTypedef* hModbus;
 
 void modbus_1t5_Timeout();

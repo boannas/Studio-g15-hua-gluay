@@ -32,13 +32,14 @@ typedef struct{
 	uint16_t bS;
 	uint16_t vS;
 	uint16_t gmS;
-	uint16_t gmaS;
+	uint16_t ReedStatus;
 	uint16_t zmS;
 // for testing
 	uint16_t sw;
 	uint16_t swp;
 	uint16_t sh;
 	uint16_t sp;
+	uint16_t MotorHome;
 
 }BaseStruct;
 extern BaseStruct base;
@@ -51,6 +52,7 @@ extern void Heartbeat();
 extern void Routine();
 extern void Vacuum();
 extern void GripperMovement();
+extern void GripperMovementStatus();
 extern void SetShelves();
 extern void RunPoint();
 extern void SetHome();

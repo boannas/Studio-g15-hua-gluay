@@ -5,23 +5,24 @@
  *      Author: napat
  */
 
+// Include Library here !
 #include "Encoder.h"
 #include "main.h"
 #include "kalman.h"
 #include "PID_controller.h"
 
 // Import variable from other .c file
-extern KalmanFilter Vel_filtered;
-extern PID_struct PID_velo;
+KalmanFilter Vel_filtered;
+PID_struct PID_velo;
 
-// AMT Resolution & pulley size
+// Define variable inside library
+int32_t diffPosition;
 uint32_t cnt_per_rev = 8192.0;
 float pulley_cir = 2.0*(22.0/7.0)*12.5;				// millimeter
-
-// Define variable in this library
-int32_t diffPosition;
 float diffTime;
-float ALPHA = 0.3f;
+float ALPHA = 0.3f;									// smoothing param
+
+//-------------------------------------------Function Code-------------------------------------------------------//
 
 void AMT_encoder_init(AMT_Encoder *AMT_data,TIM_HandleTypeDef *Encoder_timer)
 {
@@ -57,10 +58,11 @@ void AMT_encoder_update(AMT_Encoder *AMT_data, TIM_HandleTypeDef *Encoder_timer,
 //	AMT_data->Angular_Velocity = lowPassFilter(SteadyStateKalmanFilter(&Vel_filtered,Vin, (diffPosition * 60.0) / (cnt_per_rev * (diffTime / 1e6))));	//RPM
 	AMT_data->Angular_Velocity = (diffPosition * 60.0) / (cnt_per_rev * (diffTime / 1e6));	//RPM
 
+	// Calculate Linear
 	AMT_data->Linear_Position += (diffPosition*pulley_cir)/cnt_per_rev;			//mm
 	AMT_data->Linear_Velocity = (AMT_data->Angular_Velocity / 60.0) * pulley_cir;		//mm/s
 	AMT_data->Linear_Velo[QEI_NOW] = AMT_data->Linear_Velocity;					//Uodate Velo
-//	AMT_data->Linear_Acceleration = ((AMT_data->Linear_Velo[QEI_NOW] - AMT_data->Linear_Velo[QEI_PREV]) *  1000000.0) / (diffTime);		//mm/s^2
+	AMT_data->Linear_Acceleration = ((AMT_data->Linear_Velo[QEI_NOW] - AMT_data->Linear_Velo[QEI_PREV]) *  1e6) / (diffTime);		//mm/s^2
 
 	//store value for next loop
 	AMT_data->Position[QEI_PREV] = AMT_data->Position[QEI_NOW];
@@ -70,8 +72,8 @@ void AMT_encoder_update(AMT_Encoder *AMT_data, TIM_HandleTypeDef *Encoder_timer,
 
 void AMT_encoder_reset(AMT_Encoder *AMT_data)
 {
-	AMT_data->Linear_Position = 0;
-	AMT_data->Position[QEI_NOW] = 0;
+	AMT_data->Linear_Position = 600;
+//	AMT_data->Position[QEI_NOW] = 0;
 
 }
 

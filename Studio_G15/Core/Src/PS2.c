@@ -4,6 +4,8 @@
  *  Created on: May 7, 2024
  *      Author: napat
  */
+
+// Include Library here !
 #include <BaseSystem.h>
 #include "PS2.h"
 #include "main.h"
@@ -12,13 +14,19 @@
 #include "Encoder.h"
 #include "PID_controller.h"
 
-int num[10]= {48,49,50,51,52,53,54,55,56,57};
-float count = 1;
-extern PID_struct PID_pos;
-extern BaseStruct base;
+// Import variable from other .c file
+PID_struct PID_pos;
+BaseStruct base;
 extern AMT_Encoder AMT;
 extern MOTOR MT;
 extern u16u8_t registerFrame[200];
+
+// Define variable inside library
+int num[10]= {48,49,50,51,52,53,54,55,56,57};
+float count = 1;
+
+//-------------------------------------------Function Code-------------------------------------------------------//
+
 void PS2_init(PS2_typedef* PS2)
 {
     PS2->ps2RX[10] = 0;

@@ -4,11 +4,16 @@
  *  Created on: May 5, 2024
  *      Author: napat
  */
+
+// Include Library here !
 #include "Trapezoidal.h"
 #include "main.h"
 #include "math.h"
+
+// Import variable from other .c file
 extern float elapsedTime;
 
+// Define variable inside library
 float Acc_max ;
 float Vel_max;
 float Distance_Velo_Max;
@@ -23,6 +28,7 @@ float Distance;
 float Time_acc;
 float Time_dec;
 
+//-------------------------------------------Function Code-------------------------------------------------------//
 
 void Traject_init(Trap_Traj* Traj, float v_max, float a_max)
 {

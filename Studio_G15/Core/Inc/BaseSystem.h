@@ -16,7 +16,7 @@ extern ModbusHandleTypedef hmodbus;
 extern u16u8_t registerFrame[200];
 extern int caseF;
 typedef struct{
-	uint16_t bStatus;
+	uint16_t BaseStatus;
 	uint32_t PositionZ;
 	uint32_t PositionX;
 	uint32_t Speed;
@@ -29,11 +29,12 @@ typedef struct{
 	uint16_t GoalPoint;
 	uint16_t Pick;
 	uint16_t Place;
-	uint16_t bS;
-	uint16_t vS;
-	uint16_t gmS;
+	uint16_t Base_case;	//bs
+	uint16_t Vacuum_case;			//vS
+	uint16_t Gripper_case;	//gms
 	uint16_t ReedStatus;
-	uint16_t zmS;
+//	uint16_t Z_axis_movement_status;	//zms
+
 // for testing
 	uint16_t sw;
 	uint16_t swp;

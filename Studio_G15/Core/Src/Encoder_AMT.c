@@ -62,7 +62,7 @@ void AMT_encoder_update(AMT_Encoder *AMT_data, TIM_HandleTypeDef *Encoder_timer,
 	AMT_data->Linear_Position += (diffPosition*pulley_cir)/cnt_per_rev;			//mm
 	AMT_data->Linear_Velocity = (AMT_data->Angular_Velocity / 60.0) * pulley_cir;		//mm/s
 	AMT_data->Linear_Velo[QEI_NOW] = AMT_data->Linear_Velocity;					//Uodate Velo
-	AMT_data->Linear_Acceleration = ((AMT_data->Linear_Velo[QEI_NOW] - AMT_data->Linear_Velo[QEI_PREV]) *  1e6) / (diffTime);		//mm/s^2
+//	AMT_data->Linear_Acceleration = ((AMT_data->Linear_Velo[QEI_NOW] - AMT_data->Linear_Velo[QEI_PREV]) *  1e6) / (diffTime);		//mm/s^2
 
 	//store value for next loop
 	AMT_data->Position[QEI_PREV] = AMT_data->Position[QEI_NOW];

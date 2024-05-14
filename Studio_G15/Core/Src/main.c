@@ -67,11 +67,11 @@ DMA_HandleTypeDef hdma_usart2_rx;
 
 // Define some library variable
 MOTOR MT;
+Trap_Traj Traj;
 AMT_Encoder AMT;
 PS2_typedef ps2;
 extern PID_struct PID_pos;
 extern PID_struct PID_velo;
-extern Trap_Traj Traj;
 extern KalmanFilter Vel_filtered;
 extern BaseStruct base;
 ModbusHandleTypedef hmodbus;
@@ -208,87 +208,40 @@ int main(void)
 
 	  //Modbus
 	  easyCase();
-	  switch(base.bS){
-//	  case 0:
-//		  registerFrame[0x01].U16 = 0;
-//		  base.bStatus = 0;
-//		  break;
+	  switch(base.Base_case){
 	  case 1:
-		  base.bStatus = 1;
+		  base.BaseStatus = 1;
 		  SetShelves();
-//		  base.bS = 0;
 		  break;
 	  case 2:
-		  base.bStatus = 2;
+		  base.BaseStatus = 2;
 		  SetHome();
-//		  base.bS = 0;
 		  break;
 	  case 4:
-		  base.bStatus = 4;
+		  base.BaseStatus = 4;
 		  RunJog();
-//		  base.bS = 0;
 		  break;
 	  case 8:
-		  base.bStatus = 8;
+		  base.BaseStatus = 8;
 		  RunPoint();
-//		  base.bS = 0;
-		  break;
-	  }
-
-	  // Vacuum Status
-	  switch(base.vS){
-	  case 0:
-		  base.Vacuum = 0;
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_5, RESET);			// Vacuum off
-		  break;
-	  case 1:
-		  base.Vacuum = 1;
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_5, SET);			// Vacuum on
-		  break;
-	  }
-
-
-	  // Gripper Movement Status
-	  switch(base.gmS){
-	  case 0:
-		  base.Gripper = 0;
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, SET);			// Backward
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, RESET);
-		  break;
-	  case 1:
-		  base.Gripper = 1;
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, RESET);			//Forward
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, SET);
 		  break;
 	  }
 
 	  // Reed Switch Status
-//	  if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == SET && HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7) == RESET)
-//	  {
-//		  base.ReedStatus = 0b0001;
-//	  }
-//	  else if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == RESET && HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7) == SET)
-//	  {
-//		  base.ReedStatus = 0b0010;
-//	  }
-//	  else
-//	  {
-//		  base.ReedStatus = 0b0000;
-//	  }
-
-	  // Alternative form
 	  int pinCombination = (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) << 1) | HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7);
 	  switch(pinCombination) {
-	      case 2: // Binary 10: B is SET, A is RESET
-	          base.ReedStatus = 0b0001;
-	          break;
-	      case 1: // Binary 01: B is RESET, A is SET
-	          base.ReedStatus = 0b0010;
-	          break;
-	      default:
-	          base.ReedStatus = 0b0000;
+		  case 2: // Binary 10: B is SET, A is RESET
+			  base.ReedStatus = 0b0001;
+			  break;
+		  case 1: // Binary 01: B is RESET, A is SET
+			  base.ReedStatus = 0b0010;
+			  break;
+		  default:
+			  base.ReedStatus = 0b0000;
 	  }
 
+	  Vacuum();
+	  GripperMovement();
 	  Modbus_Protocal_Worker();
 	  Routine();
 
@@ -896,6 +849,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		if(htim == &htim4)								// 2000 Hz
 		{
 			MOTOR_set_duty(&MT, base.MotorHome);
+
 
 		}
 	}

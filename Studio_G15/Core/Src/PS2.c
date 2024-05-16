@@ -206,17 +206,17 @@ void PS2X_Reader()
 		}
 	}
 	// Floor Selection
-	if(base.ShelveMode == 1){
-		if (ps2.ps2RX[0] == 71){
-			base.Shelve[ps2.counts-1] = ps2.PIDPos;
+	if(base.ShelveMode == 1){									//In Shelve mode
+		if (ps2.ps2RX[0] == 71){								//Press Select to save shelve
+			base.Shelve[ps2.counts-1] = AMT.Linear_Position;	//Set shelve in to array base.Shelve
 			ps2.counts=  +1;
 		}
-		else if (ps2.ps2RX[0] == 73){
+		else if (ps2.ps2RX[0] == 73){							//Press Triangle to delete old array
 			base.Shelve[ps2.counts-1] = 0;
 			ps2.counts = ps2.counts -1;
 		}
 
-		if (ps2.ps2RX[0] == 72 && base.ShelveMode == 1){
+		if (ps2.ps2RX[0] == 72 && base.ShelveMode == 1){		//Press Start to finish set shelves and send data to basesystem
 			base.ShelveMode = 0;
 			registerFrame[0x10].U16 = 0b0000;
 		}

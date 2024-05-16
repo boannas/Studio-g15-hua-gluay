@@ -76,19 +76,18 @@ void GripperMovement(){
 
 void SetShelves(){
 	registerFrame[0x10].U16 = 1; 		//Z-axis update z-xis moving status to "Set Shelves"
-	// save Position = floor[0] for moving to that position
-	// set shelves 1 = 100 mm shelves 2 = 250 mm
-	registerFrame[0x23].U16 = 10 *10; 	//0 = Position Shelve 1
-	registerFrame[0x24].U16 = 20 *10;
-	registerFrame[0x25].U16 = 30 *10;
-	registerFrame[0x26].U16 = 40 *10;
-	registerFrame[0x27].U16 = 50 *10;
-	//finish
-	if (base.sw == 1){
+	base.ShelveMode = 1;
+	if (base.ShelveMode == 0)
+	{
+		registerFrame[0x23].U16 = base.Shelve[0] *10; 	//Position Shelve 1
+		registerFrame[0x24].U16 = base.Shelve[1] *10;
+		registerFrame[0x25].U16 = base.Shelve[2] *10;
+		registerFrame[0x26].U16 = base.Shelve[3] *10;
+		registerFrame[0x27].U16 = base.Shelve[4] *10;
+		//finish
 		base.BaseStatus = 0;
 		registerFrame[0x01].U16 = base.BaseStatus;
 		registerFrame[0x10].U16 = 0;
-		base.sw = 0;
 	}
 }
 

@@ -60,8 +60,8 @@ all: main-build
 main-build: Studio_G15.elf secondary-outputs
 
 # Tool invocations
-Studio_G15.elf Studio_G15.map: $(OBJS) $(USER_OBJS) C:\Users\napat\Documents\GitHub\Studio-g15-hua-gluay\Studio_G15\STM32G474RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Studio_G15.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\napat\Documents\GitHub\Studio-g15-hua-gluay\Studio_G15\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Studio_G15.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Studio_G15.elf Studio_G15.map: $(OBJS) $(USER_OBJS) C:\Users\porpo\OneDrive\Documents\GitHub\Newlife\Studio-g15-hua-gluay\Studio_G15\STM32G474RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Studio_G15.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\porpo\OneDrive\Documents\GitHub\Newlife\Studio-g15-hua-gluay\Studio_G15\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Studio_G15.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

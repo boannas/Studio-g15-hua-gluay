@@ -71,7 +71,7 @@ Trap_Traj Traj;
 AMT_Encoder AMT;
 PS2_typedef ps2;
 extern PID_struct PID_pos;
-extern PID_struct PID_velo;
+PID_struct PID_velo;
 extern KalmanFilter Vel_filtered;
 extern BaseStruct base;
 ModbusHandleTypedef hmodbus;
@@ -848,9 +848,20 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			}
 		if(htim == &htim4)								// 2000 Hz
 		{
-			MOTOR_set_duty(&MT, base.MotorHome);
-
-
+			if (base.BaseStatus == 2){
+				MOTOR_set_duty(&MT, base.MotorHome);
+			}
+			if (ps2.mode == 1){
+				MOTOR_set_duty(&MT, ps2.pwmOut);
+				if (ps2.pwmOut < 0)
+				{
+					MOTOR_set_duty(&MT, 0);
+				}
+			}
+			if (ps2.mode == 2){
+				PID_controller_cascade(&PID_pos, &PID_velo, &AMT, ps2.PIDPos);
+				MOTOR_set_duty(&MT, PID_velo.out);
+			}
 		}
 	}
 

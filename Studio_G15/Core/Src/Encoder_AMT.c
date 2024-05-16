@@ -13,7 +13,7 @@
 
 // Import variable from other .c file
 KalmanFilter Vel_filtered;
-PID_struct PID_velo;
+extern PID_struct PID_velo;
 
 // Define variable inside library
 int32_t diffPosition;

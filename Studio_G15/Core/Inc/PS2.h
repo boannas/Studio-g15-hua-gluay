@@ -27,6 +27,7 @@ typedef struct
     float PIDPos;
     int on;
 	} PS2_typedef;
+extern PS2_typedef ps2;
 
 void PS2X_Reader();
 void PS2_init();

@@ -16,6 +16,7 @@
 
 // Import variable from other .c file
 PID_struct PID_pos;
+extern PID_struct PID_velo;
 BaseStruct base;
 extern AMT_Encoder AMT;
 extern MOTOR MT;
@@ -59,6 +60,7 @@ void PS2X_Reader()
 	if (ps2.ps2RX[0] == 70)		//Press L5 to switch to use Button
 	{
 		ps2.mode = 2;
+		PID_velo.out = 0;
 		ps2.on =1;
 		ps2.PIDPos = AMT.Linear_Position;
 
@@ -111,14 +113,14 @@ void PS2X_Reader()
 		{
 			ps2.pwmOut = 0;
 		}
-		if (ps2.pwmOut < 0)
-		{
-			MOTOR_set_duty(&MT, 0);
-		}
-		else if (ps2.pwmOut > 0)
-		{
-			MOTOR_set_duty(&MT, ps2.pwmOut);
-		}
+//		if (ps2.pwmOut < 0)
+//		{
+//			MOTOR_set_duty(&MT, 0);
+//		}
+//		else if (ps2.pwmOut > 0)
+//		{
+//			MOTOR_set_duty(&MT, ps2.pwmOut);
+//		}
 	}
 
 	//--- Mode Button ---//

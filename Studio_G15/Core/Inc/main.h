@@ -64,12 +64,12 @@ void Error_Handler(void);
 #define B1_EXTI_IRQn EXTI15_10_IRQn
 #define Current_sensor_Pin GPIO_PIN_0
 #define Current_sensor_GPIO_Port GPIOC
-#define Limit_Top_Pin GPIO_PIN_4
-#define Limit_Top_GPIO_Port GPIOA
+#define Limit_Base_Pin GPIO_PIN_4
+#define Limit_Base_GPIO_Port GPIOA
 #define LD2_Pin GPIO_PIN_5
 #define LD2_GPIO_Port GPIOA
-#define Limit_Base_Pin GPIO_PIN_6
-#define Limit_Base_GPIO_Port GPIOA
+#define Limit_Top_Pin GPIO_PIN_6
+#define Limit_Top_GPIO_Port GPIOA
 #define Reed_pull_Pin GPIO_PIN_7
 #define Reed_pull_GPIO_Port GPIOA
 #define Pull_solenoid_Pin GPIO_PIN_4

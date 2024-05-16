@@ -9,13 +9,11 @@
 #include "BaseSystem.h"
 #include "main.h"
 #include "Encoder.h"
-#include "Motor.h"
 #include "Trapezoidal.h"
 #include "stm32g4xx_hal.h"
 
 // Import variable from other .c file
 extern AMT_Encoder AMT;
-extern MOTOR MT;
 extern Trap_Traj Traj;
 //-------------------------------------------Function Code-------------------------------------------------------//
 
@@ -109,14 +107,15 @@ void RunPoint(){
 
 void SetHome(){
 	registerFrame[0x10].U16 = 2;
-	base.MotorHome = 350;		// Set duty cycle to go upward at slowest speed
+	base.MotorHome = 300;		// Set duty cycle to go upward at slowest speed
 	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6) == GPIO_PIN_SET)		// Top photo limit was triggered
 		{
+			base.BaseStatus = 0;
 			base.MotorHome = 150;		// Set duty cycle to hold position gripper
 			AMT_encoder_reset(&AMT);	// Set linear position to ...
-			base.BaseStatus = 0;
 			registerFrame[0x01].U16 = base.BaseStatus;
 			registerFrame[0x10].U16 = 0;
+
 		}
 }
 

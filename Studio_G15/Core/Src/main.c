@@ -225,6 +225,8 @@ int main(void)
 		  base.BaseStatus = 8;
 		  RunPoint();
 		  break;
+	  default :
+		  base.BaseStatus = 0;
 	  }
 
 	  // Reed Switch Status
@@ -798,8 +800,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Limit_Top_Pin Limit_Base_Pin Reed_pull_Pin */
-  GPIO_InitStruct.Pin = Limit_Top_Pin|Limit_Base_Pin|Reed_pull_Pin;
+  /*Configure GPIO pins : Limit_Base_Pin Limit_Top_Pin Reed_pull_Pin */
+  GPIO_InitStruct.Pin = Limit_Base_Pin|Limit_Top_Pin|Reed_pull_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -851,17 +853,21 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			if (base.BaseStatus == 2){
 				MOTOR_set_duty(&MT, base.MotorHome);
 			}
-			if (ps2.mode == 1){
-				MOTOR_set_duty(&MT, ps2.pwmOut);
-				if (ps2.pwmOut < 0)
-				{
-					MOTOR_set_duty(&MT, 0);
-				}
+			else {
+				MOTOR_set_duty(&MT, base.MotorHome);
 			}
-			if (ps2.mode == 2){
-				PID_controller_cascade(&PID_pos, &PID_velo, &AMT, ps2.PIDPos);
-				MOTOR_set_duty(&MT, PID_velo.out);
-			}
+
+//			if (ps2.mode == 1){
+//				MOTOR_set_duty(&MT, ps2.pwmOut);
+//				if (ps2.pwmOut < 0)
+//				{
+//					MOTOR_set_duty(&MT, 0);
+//				}
+//			}
+//			if (ps2.mode == 2){
+//				PID_controller_cascade(&PID_pos, &PID_velo, &AMT, ps2.PIDPos);
+//				MOTOR_set_duty(&MT, PID_velo.out);
+//			}
 		}
 	}
 

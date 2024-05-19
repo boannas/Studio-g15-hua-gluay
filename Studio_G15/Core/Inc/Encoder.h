@@ -19,6 +19,7 @@ typedef struct
 		float Angular_Velocity;			//RPM
 		float Linear_Acceleration;		//mm/s^2
 		float Linear_Velocity;			//mm/s
+		float Linear_kalmanVelocity;
 		float Linear_Position;			//mm
 		TIM_HandleTypeDef *EncoderTIM;	//Difine Encoder Timer
 

@@ -82,6 +82,7 @@ uint8_t fixps2[10];
 float elapsedTime = 0.0f;			// Total elapsed time in seconds
 float i = 0;
 u16u8_t registerFrame[200];
+int ppp = 0;
 
 // Function here!
 uint64_t micros();
@@ -164,11 +165,11 @@ int main(void)
   hmodbus.RegisterSize =200;
   Modbus_init(&hmodbus, registerFrame);
 
-  //float PID_pos_K[3] = {0.01 ,0.0, 0};
-  float PID_pos_K[3] = {4.5 ,0.00000000495, 0};
+  float PID_pos_K[3] = {2.5 ,0.000025  , 0};
+//  float PID_pos_K[3] = {4.5 ,0.00000000495, 0};
 
   //float PID_velo_K[3] = {3.35 ,0.050, 0.001};
-  float PID_velo_K[3] = {3.35 ,0.050, 0.001};
+  float PID_velo_K[3] = {11.489 ,0.0000000049, 0.0};
 
   // Initialize ASRS
   Traject_init(&Traj,450, 500);				// V_max, A_max
@@ -192,62 +193,28 @@ int main(void)
 	  static uint64_t timestamps =0;
 	  if(HAL_GetTick() > timestamps)
 	  {
-		  timestamps =HAL_GetTick() + 100;		//ms
+		  timestamps =HAL_GetTick() + 50;		//ms
 	  	  Heartbeat();
 	  }
 
 
-	  // Read AMT encoder 1000 Hz
-	  static uint64_t timestamp =0;
-	  int64_t currentTime = HAL_GetTick();
-	  if(currentTime > timestamp)
-	  {
-	  timestamp =currentTime + 1;				//ms
-	  AMT_encoder_update(&AMT, &htim2, micros());
-	  }
+//	   Read AMT encoder 1000 Hz
+//	  static uint64_t timestamp =0;
+//	  int64_t currentTime = HAL_GetTick();
+//	  if(currentTime > timestamp)
+//	  {
+//	  timestamp =currentTime + 1;				//ms
+//	  AMT_encoder_update(&AMT, &htim2, micros());
+//	  }
 
-	  //Modbus
-	  easyCase();
-	  switch(base.Base_case){
-	  case 1:
-		  base.BaseStatus = 1;
-		  SetShelves();
-		  break;
-	  case 2:
-		  base.BaseStatus = 2;
-		  SetHome();
-		  break;
-	  case 4:
-		  base.BaseStatus = 4;
-		  RunJog();
-		  break;
-	  case 8:
-		  base.BaseStatus = 8;
-		  RunPoint();
-		  break;
-	  default :
-		  base.BaseStatus = 0;
-	  }
 
-	  // Reed Switch Status
-	  int pinCombination = (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) << 1) | HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7);
-	  switch(pinCombination) {
-		  case 2: // Binary 10: B is SET, A is RESET
-			  base.ReedStatus = 0b0001;
-			  break;
-		  case 1: // Binary 01: B is RESET, A is SET
-			  base.ReedStatus = 0b0010;
-			  break;
-		  default:
-			  base.ReedStatus = 0b0000;
-	  }
 
 	  Vacuum();
 	  GripperMovement();
 	  Modbus_Protocal_Worker();
 	  Routine();
 
-//	  //Ps2
+////	  //Ps2
 	  HAL_UART_Receive(&huart4,ps2.ps2RX, 10 ,10);
 	  if(ps2.ps2RX[0] == 74){
 		  ps2.stop = 1;
@@ -510,9 +477,9 @@ static void MX_TIM4_Init(void)
 
   /* USER CODE END TIM4_Init 1 */
   htim4.Instance = TIM4;
-  htim4.Init.Prescaler = 1699;
+  htim4.Init.Prescaler = 169;
   htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim4.Init.Period = 499;
+  htim4.Init.Period = 50;
   htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
@@ -599,9 +566,9 @@ static void MX_TIM6_Init(void)
 
   /* USER CODE END TIM6_Init 1 */
   htim6.Instance = TIM6;
-  htim6.Init.Prescaler = 169;
+  htim6.Init.Prescaler = 0;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 10;
+  htim6.Init.Period = 65535;
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
@@ -842,21 +809,102 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+volatile uint32_t interrupt_counter = 0;
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	{
 		if(htim == &htim5)
 			{
 			_micros += UINT32_MAX;
 			}
-		if(htim == &htim4)								// 2000 Hz
+		if(htim == &htim4)
 		{
-			if (base.BaseStatus == 2){
-				MOTOR_set_duty(&MT, base.MotorHome);
-			}
-			else {
-				MOTOR_set_duty(&MT, base.MotorHome);
+			interrupt_counter++;
+
+
+			// For 20 kHz
+			//------------------For AMT Encoder-------------------//
+
+//			elapsedTime += 0.00005;						// Calibrate Time
+
+
+
+			// For 10 kHz
+			//-------For AMT Encoder & Base Status check----------//
+			if(interrupt_counter % 2 == 0)
+			{
+
+			    AMT_encoder_update(&AMT, &htim2, micros());
+
+				//Modbus
+				easyCase();
+				switch(base.Base_case){
+					case 1:
+						base.BaseStatus = 1;
+						SetShelves();
+						break;
+					case 2:
+						base.BaseStatus = 2;
+						SetHome();
+						break;
+					case 4:
+						base.BaseStatus = 4;
+						RunJog();
+						break;
+					case 8:
+						base.BaseStatus = 8;
+						RunPoint();
+						break;
+					default :
+						base.BaseStatus = 0;
+				}
+
+				// Reed Switch Status
+				int pinCombination = (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) << 1) | HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7);
+				switch(pinCombination) {
+					case 2: // Binary 10: B is SET, A is RESET
+						base.ReedStatus = 0b0001;
+						break;
+					case 1: // Binary 01: B is RESET, A is SET
+						base.ReedStatus = 0b0010;
+						break;
+					default:
+						base.ReedStatus = 0b0000;
+				}
+//				elapsedTime += 0.0001;					// Calibrate Time
+
 			}
 
+
+
+			// For 5 KHz
+			//----------------For PID & Trajectory----------------//
+			if(interrupt_counter % 4 == 0)
+			{
+				if(ppp == 1){
+					elapsedTime += 0.0002;
+					Traject(&Traj, 0, 300);
+					PID_controller_calculate_velo(&PID_velo, &AMT, Traj.currentVelocity);
+//					PID_controller_calculate_pos(&PID_pos, &AMT, Traj.currentPosition);
+				}
+			}
+
+
+
+			// For 2 kHz
+			//------------------For control PWM-------------------//
+			if(interrupt_counter % 10 == 0)
+			{
+
+//				elapsedTime += 0.0005;					//Calibrated Time
+//				if (base.BaseStatus == 2){
+//					MOTOR_set_duty(&MT, base.MotorHome);
+//				}
+//				else {
+//					MOTOR_set_duty(&MT, base.MotorHome);
+//			}
+//
+//}
 //			if (ps2.mode == 1){
 //				MOTOR_set_duty(&MT, ps2.pwmOut);
 //				if (ps2.pwmOut < 0)
@@ -868,7 +916,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 //				PID_controller_cascade(&PID_pos, &PID_velo, &AMT, ps2.PIDPos);
 //				MOTOR_set_duty(&MT, PID_velo.out);
 //			}
-		}
+				MOTOR_set_duty(&MT, PID_velo.out);
+			}
+	}
 	}
 
 uint64_t micros()

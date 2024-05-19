@@ -7,6 +7,7 @@
 
 // Include Library here !
 #include "Motor.h"
+#include "math.h"
 
 //-------------------------------------------Function Code-------------------------------------------------------//
 

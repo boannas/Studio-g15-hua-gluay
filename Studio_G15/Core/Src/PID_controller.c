@@ -46,11 +46,13 @@ void PID_controller_calculate_pos(PID_struct* PID,AMT_Encoder* Feedback, float s
 void PID_controller_calculate_velo(PID_struct* PID,AMT_Encoder* Feedback, float setpoint)
 {
  // Output pwm to drive the motor
- PID->Error[n] = setpoint - Feedback->Linear_Velocity;
+ PID->Error[n] = setpoint - Feedback->Linear_kalmanVelocity;
  if (!((PID->out >= 1000 && PID->Error[n] > 0) || (PID->out <= -1000 && PID->Error[n] < 0))) {
      PID->out += ((PID->Kp + PID->Ki + PID->Kd) * PID->Error[n])
                       - ((PID->Kp + (2 * PID->Kd)) * PID->Error[n_1])
                       + (PID->Kd * PID->Error[n_2]);
+//     PID->out = kalman_filter(PID->out);
+
  }
  PID->Error[n_2] = PID->Error[n_1];
  PID->Error[n_1] = PID->Error[n];
